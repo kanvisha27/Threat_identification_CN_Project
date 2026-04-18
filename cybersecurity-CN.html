@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Threats & Cybersecurity Awareness</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #050d1a;
+  --deep-blue: #0a1628;
+  --mid-blue: #0d2247;
+  --accent: #1a6fff;
+  --accent2: #00c8ff;
+  --accent3: #00f0a0;
+  --danger: #ff4060;
+  --warn: #ffb020;
+  --white: #ffffff;
+  --offwhite: #e8f0ff;
+  --muted: #7090b8;
+  --card-bg: rgba(13,34,71,0.7);
+  --glass: rgba(26,111,255,0.08);
+  --border: rgba(26,111,255,0.2);
+  --font-display: 'Sora', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-display);
+  background: var(--navy);
+  color: var(--offwhite);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(5,13,26,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.nav-logo {
+  font-weight: 800; font-size: 1.1rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}
+.nav-logo span { font-family: var(--font-mono); }
+.nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+.nav-links button {
+  background: none; border: none; color: var(--muted);
+  font-family: var(--font-display); font-size: 0.78rem; font-weight: 600;
+  padding: 0.4rem 0.7rem; border-radius: 6px; cursor: pointer;
+  transition: all 0.2s; letter-spacing: 0.02em; text-transform: uppercase;
+}
+.nav-links button:hover, .nav-links button.active {
+  color: var(--accent2); background: var(--glass);
+}
+.hamburger { display: none; background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
+
+/* ── PAGES ── */
+.page { display: none; padding-top: 64px; min-height: 100vh; animation: fadeIn 0.4s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── HERO ── */
+.hero {
+  position: relative; overflow: hidden;
+  padding: 6rem 2rem 5rem;
+  text-align: center;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26,111,255,0.18) 0%, transparent 70%);
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: 
+    linear-gradient(rgba(26,111,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,111,255,0.06) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove { from { background-position: 0 0; } to { background-position: 50px 50px; } }
+
+.hero-badge {
+  display: inline-block; padding: 0.35rem 1rem; border-radius: 50px;
+  background: rgba(26,111,255,0.15); border: 1px solid var(--accent);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent2); margin-bottom: 1.5rem; position: relative;
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.8rem); font-weight: 800; line-height: 1.1;
+  position: relative; margin-bottom: 1.5rem;
+}
+.hero h1 .gradient {
+  background: linear-gradient(135deg, var(--accent2), var(--accent), #7c5fff);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero p {
+  font-size: 1.05rem; color: var(--muted); max-width: 640px; margin: 0 auto 3rem;
+  line-height: 1.7; position: relative;
+}
+
+/* ── ATTACK CARDS ── */
+.attack-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem; max-width: 1000px; margin: 0 auto; padding: 0 2rem;
+  position: relative;
+}
+.attack-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.75rem 1.5rem;
+  cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+.attack-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--card-accent, var(--accent));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s;
+}
+.attack-card:hover { transform: translateY(-6px); border-color: var(--card-accent, var(--accent)); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.attack-card:hover::before { transform: scaleX(1); }
+.card-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+.attack-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+.attack-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.2rem; }
+.card-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em;
+  color: var(--accent2); text-transform: uppercase; background: none; border: none;
+  cursor: pointer; font-family: var(--font-display);
+}
+.card-btn:hover { color: var(--white); }
+
+/* ── SECTION STYLES ── */
+.section-header {
+  padding: 4rem 2rem 2rem; max-width: 800px; margin: 0 auto; text-align: center;
+}
+.section-header .tag {
+  display: inline-block; padding: 0.3rem 0.9rem; border-radius: 50px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.section-header h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 1rem; }
+.section-header p { color: var(--muted); line-height: 1.7; font-size: 0.95rem; }
+
+.content-area { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+/* ── INFO CARDS ── */
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.info-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.5rem; backdrop-filter: blur(8px);
+}
+.info-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--accent2); }
+.info-card p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+.info-card ul { list-style: none; }
+.info-card ul li { font-size: 0.83rem; color: var(--muted); line-height: 1.7; padding-left: 1.2rem; position: relative; }
+.info-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent3); font-size: 0.75rem; }
+
+/* ── SIMULATION BOX ── */
+.sim-box {
+  background: var(--deep-blue); border: 1px solid var(--border);
+  border-radius: 16px; padding: 2rem; margin: 2rem 0;
+  position: relative; overflow: hidden;
+}
+.sim-box::before {
+  content: '⚡ SAFE SIMULATION'; position: absolute; top: 0.75rem; right: 1rem;
+  font-size: 0.65rem; font-family: var(--font-mono); color: var(--accent3);
+  letter-spacing: 0.1em; font-weight: 700;
+}
+.sim-title { font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+.sim-btn {
+  background: linear-gradient(135deg, var(--accent), #0d4fd6);
+  color: white; border: none; padding: 0.6rem 1.4rem;
+  border-radius: 8px; font-family: var(--font-display);
+  font-size: 0.82rem; font-weight: 700; cursor: pointer;
+  transition: all 0.2s; margin-top: 1rem; letter-spacing: 0.03em;
+}
+.sim-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,111,255,0.3); }
+.sim-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* ── FLOW DIAGRAM ── */
+.flow-diagram { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; margin: 1.5rem 0; }
+.flow-node {
+  background: var(--mid-blue); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1rem 1.25rem; text-align: center;
+  min-width: 100px; font-size: 0.78rem; font-weight: 600;
+  position: relative; flex-shrink: 0;
+}
+.flow-node .fn-icon { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
+.flow-node.danger { border-color: var(--danger); background: rgba(255,64,96,0.1); }
+.flow-node.safe { border-color: var(--accent3); background: rgba(0,240,160,0.08); }
+.flow-arrow {
+  width: 50px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2));
+  position: relative; flex-shrink: 0;
+}
+.flow-arrow::after {
+  content: ''; position: absolute; right: -1px; top: 50%; transform: translateY(-50%);
+  border: 5px solid transparent; border-left-color: var(--accent2);
+}
+.flow-arrow.animated { animation: flowPulse 1.5s ease infinite; }
+.flow-arrow.danger-flow { background: linear-gradient(90deg, var(--danger), var(--warn)); }
+.flow-arrow.danger-flow::after { border-left-color: var(--warn); }
+@keyframes flowPulse {
+  0%, 100% { opacity: 0.4; } 50% { opacity: 1; }
+}
+
+/* ── PREVENTION LIST ── */
+.prevention-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 2rem; }
+.prevention-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: rgba(0,240,160,0.05); border: 1px solid rgba(0,240,160,0.15);
+  border-radius: 12px; padding: 1.1rem;
+}
+.prevention-item .pi-icon { font-size: 1.4rem; flex-shrink: 0; }
+.prevention-item h5 { font-size: 0.85rem; font-weight: 700; color: var(--accent3); margin-bottom: 0.25rem; }
+.prevention-item p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+/* ── PHISHING DEMO ── */
+.fake-login {
+  background: #f4f7fb; border-radius: 12px; padding: 2rem;
+  max-width: 360px; margin: 0 auto; color: #1a1a2e;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border: 3px solid transparent; transition: border-color 0.3s;
+  font-family: var(--font-display);
+}
+.fake-login.exposed { border-color: var(--danger); }
+.fake-login .fl-logo { text-align: center; margin-bottom: 1.5rem; }
+.fake-login .fl-logo span { font-size: 1.2rem; font-weight: 800; color: #1a6fff; }
+.fake-login input {
+  width: 100%; padding: 0.7rem 1rem; border: 1px solid #d0d9f0;
+  border-radius: 8px; font-family: var(--font-display); font-size: 0.9rem;
+  margin-bottom: 0.75rem; background: white; color: #333;
+  outline: none; transition: border 0.2s;
+}
+.fake-login input:focus { border-color: #1a6fff; }
+.fake-login .fl-btn {
+  width: 100%; padding: 0.8rem; background: #1a6fff;
+  color: white; border: none; border-radius: 8px;
+  font-weight: 700; cursor: pointer; font-family: var(--font-display);
+}
+.fake-login .fl-url {
+  text-align: center; margin-top: 0.75rem;
+  font-size: 0.72rem; color: #888; font-family: var(--font-mono);
+}
+.fake-login .fl-warn {
+  display: none; background: #fff0f3; border: 1px solid var(--danger);
+  border-radius: 8px; padding: 0.75rem; margin-top: 1rem;
+  font-size: 0.78rem; color: var(--danger); text-align: center;
+}
+.captured-data {
+  margin-top: 1.5rem; background: rgba(255,64,96,0.1);
+  border: 1px solid var(--danger); border-radius: 12px; padding: 1.25rem;
+  font-family: var(--font-mono); font-size: 0.78rem; display: none;
+}
+.captured-data h5 { color: var(--danger); margin-bottom: 0.75rem; }
+.captured-data .data-line { color: var(--offwhite); margin-bottom: 0.25rem; }
+.captured-data .data-line span { color: var(--warn); }
+
+/* ── MALWARE STAGES ── */
+.malware-stages { display: flex; flex-direction: column; gap: 1rem; }
+.stage {
+  display: flex; gap: 1rem; align-items: center;
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.1rem 1.4rem;
+  opacity: 0.3; transition: all 0.5s; transform: translateX(-20px);
+}
+.stage.active { opacity: 1; transform: translateX(0); border-color: var(--danger); }
+.stage-num {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  background: var(--danger); display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem;
+}
+.stage h5 { font-size: 0.88rem; font-weight: 700; }
+.stage p { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+.stage .stage-icon { font-size: 1.6rem; margin-left: auto; flex-shrink: 0; }
+
+/* ── DDOS ANIMATION ── */
+.ddos-visual { position: relative; height: 280px; margin: 1.5rem 0; overflow: hidden; }
+.server-box {
+  position: absolute; right: 2rem; top: 50%; transform: translateY(-50%);
+  background: var(--mid-blue); border: 2px solid var(--accent);
+  border-radius: 12px; padding: 1rem 1.25rem; text-align: center;
+  font-size: 0.8rem; font-weight: 700; min-width: 80px;
+  transition: all 0.3s;
+}
+.server-box.overloaded { border-color: var(--danger); background: rgba(255,64,96,0.15); animation: shake 0.3s infinite; }
+@keyframes shake { 0%, 100% { transform: translateY(-50%) translateX(0); } 50% { transform: translateY(-50%) translateX(4px); } }
+.request-dot {
+  position: absolute; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--danger); left: 10%; animation: flyRight 1.5s linear forwards;
+}
+@keyframes flyRight { from { left: 10%; opacity: 1; } to { left: calc(100% - 120px); opacity: 0; } }
+.ddos-meter { margin-top: 1rem; }
+.meter-label { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+.meter-bar { height: 20px; background: var(--deep-blue); border-radius: 50px; overflow: hidden; border: 1px solid var(--border); }
+.meter-fill {
+  height: 100%; width: 0%; border-radius: 50px;
+  background: linear-gradient(90deg, var(--accent3), var(--warn), var(--danger));
+  transition: width 0.3s; position: relative;
+}
+.packet-counter {
+  display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;
+}
+.counter-box {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.75rem 1.25rem;
+  text-align: center; flex: 1; min-width: 100px;
+}
+.counter-box .cval { font-size: 1.6rem; font-weight: 800; font-family: var(--font-mono); color: var(--accent2); }
+.counter-box .clabel { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
+.counter-box.danger .cval { color: var(--danger); }
+
+/* ── MITM ── */
+.mitm-visual { position: relative; padding: 2rem 0; }
+.mitm-flow { display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 1rem; }
+.mitm-node {
+  background: var(--mid-blue); border: 2px solid var(--border);
+  border-radius: 14px; padding: 1.25rem; text-align: center; min-width: 110px;
+  transition: all 0.3s;
+}
+.mitm-node.highlighted { border-color: var(--danger); box-shadow: 0 0 20px rgba(255,64,96,0.3); }
+.mitm-node .mn-icon { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+.mitm-node h5 { font-size: 0.78rem; font-weight: 700; }
+.mitm-attacker {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  background: rgba(255,64,96,0.1); border: 2px solid var(--danger);
+  border-radius: 14px; padding: 0.75rem 1.25rem; text-align: center;
+  opacity: 0; transition: opacity 0.5s; min-width: 110px;
+}
+.mitm-attacker.visible { opacity: 1; }
+.mitm-attacker .mn-icon { font-size: 1.8rem; display: block; margin-bottom: 0.3rem; }
+.mitm-attacker h5 { font-size: 0.75rem; font-weight: 700; color: var(--danger); }
+.mitm-msg {
+  background: var(--deep-blue); border-radius: 8px; padding: 0.5rem 1rem;
+  font-size: 0.75rem; font-family: var(--font-mono); margin-top: 1rem;
+  border: 1px solid var(--border); text-align: center; display: none;
+}
+.mitm-msg.visible { display: block; }
+
+/* ── PASSWORD METER ── */
+.pw-demo { max-width: 500px; margin: 0 auto; }
+.pw-input-wrap { position: relative; margin-bottom: 1rem; }
+.pw-input-wrap input {
+  width: 100%; padding: 0.85rem 3rem 0.85rem 1.25rem;
+  background: var(--deep-blue); border: 2px solid var(--border);
+  border-radius: 12px; color: var(--white); font-family: var(--font-mono);
+  font-size: 1rem; outline: none; transition: border 0.2s;
+}
+.pw-input-wrap input:focus { border-color: var(--accent); }
+.pw-toggle {
+  position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.1rem;
+}
+.pw-strength { height: 6px; border-radius: 50px; background: var(--deep-blue); margin-bottom: 0.5rem; overflow: hidden; }
+.pw-strength-fill { height: 100%; border-radius: 50px; transition: all 0.4s; width: 0%; }
+.pw-label { font-size: 0.82rem; font-weight: 700; margin-bottom: 1.5rem; }
+.pw-criteria { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+.pw-criterion {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.75rem; color: var(--muted); transition: color 0.3s;
+}
+.pw-criterion.met { color: var(--accent3); }
+.pw-criterion .dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--border);
+  flex-shrink: 0; transition: background 0.3s;
+}
+.pw-criterion.met .dot { background: var(--accent3); }
+.pw-examples { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+.pw-example {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1rem; flex: 1; min-width: 150px;
+}
+.pw-example h5 { font-size: 0.78rem; font-weight: 700; margin-bottom: 0.5rem; }
+.pw-example .pw-val { font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 0.5rem; }
+.pw-example .pw-time { font-size: 0.75rem; color: var(--muted); }
+
+/* ── QUIZ ── */
+.quiz-box {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 16px; padding: 2rem; max-width: 700px; margin: 0 auto;
+}
+.quiz-progress { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+.quiz-dot {
+  flex: 1; height: 4px; border-radius: 50px; background: var(--border);
+  transition: background 0.3s;
+}
+.quiz-dot.done { background: var(--accent); }
+.quiz-dot.current { background: var(--accent2); }
+.quiz-q { font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.5; }
+.quiz-options { display: flex; flex-direction: column; gap: 0.75rem; }
+.quiz-opt {
+  background: var(--deep-blue); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.9rem 1.25rem;
+  font-size: 0.88rem; cursor: pointer; transition: all 0.2s;
+  text-align: left; color: var(--offwhite); font-family: var(--font-display);
+}
+.quiz-opt:hover { border-color: var(--accent); background: var(--glass); }
+.quiz-opt.correct { border-color: var(--accent3); background: rgba(0,240,160,0.1); color: var(--accent3); }
+.quiz-opt.wrong { border-color: var(--danger); background: rgba(255,64,96,0.1); color: var(--danger); }
+.quiz-feedback {
+  margin-top: 1rem; padding: 1rem; border-radius: 10px; font-size: 0.85rem;
+  display: none; line-height: 1.6;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { background: rgba(0,240,160,0.08); border: 1px solid rgba(0,240,160,0.3); color: var(--accent3); }
+.quiz-feedback.wrong { background: rgba(255,64,96,0.08); border: 1px solid rgba(255,64,96,0.3); color: var(--danger); }
+.quiz-next {
+  margin-top: 1.5rem; background: var(--accent); color: white; border: none;
+  padding: 0.7rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer;
+  font-family: var(--font-display); font-size: 0.85rem; display: none;
+}
+.quiz-score {
+  text-align: center; display: none; padding: 2rem 0;
+}
+.quiz-score .score-num { font-size: 4rem; font-weight: 800; color: var(--accent2); font-family: var(--font-mono); }
+.quiz-score p { color: var(--muted); margin-top: 0.5rem; }
+.quiz-restart {
+  margin-top: 1.5rem; background: var(--accent); color: white; border: none;
+  padding: 0.7rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer;
+  font-family: var(--font-display); font-size: 0.85rem;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--deep-blue); border-top: 1px solid var(--border);
+  padding: 3rem 2rem; margin-top: 4rem;
+}
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.footer-tip {
+  background: var(--glass); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1rem;
+}
+.footer-tip h5 { font-size: 0.82rem; font-weight: 700; color: var(--accent2); margin-bottom: 0.4rem; }
+.footer-tip p { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+.footer-bottom { text-align: center; font-size: 0.75rem; color: var(--muted); padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+/* ── LIVE DEMO ── */
+.demo-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.demo-tab {
+  background: var(--glass); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.5rem 1.1rem;
+  font-size: 0.8rem; font-weight: 600; cursor: pointer;
+  color: var(--muted); font-family: var(--font-display); transition: all 0.2s;
+}
+.demo-tab.active { background: var(--accent); border-color: var(--accent); color: white; }
+.demo-panel { display: none; }
+.demo-panel.active { display: block; animation: fadeIn 0.3s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; background: var(--navy); border-bottom: 1px solid var(--border); padding: 1rem; gap: 0.25rem; }
+  .nav-links.open { display: flex; }
+  .nav-links button { text-align: left; padding: 0.6rem 1rem; }
+  .hamburger { display: block; }
+  .flow-diagram { gap: 0.5rem; }
+  .flow-arrow { width: 30px; }
+  .attack-grid { grid-template-columns: 1fr 1fr; }
+  .ddos-visual { height: 200px; }
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 50px; }
+
+/* ── BADGES ── */
+.badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 50px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.badge-danger { background: rgba(255,64,96,0.15); color: var(--danger); border: 1px solid rgba(255,64,96,0.3); }
+.badge-warn { background: rgba(255,176,32,0.15); color: var(--warn); border: 1px solid rgba(255,176,32,0.3); }
+.badge-safe { background: rgba(0,240,160,0.12); color: var(--accent3); border: 1px solid rgba(0,240,160,0.3); }
+
+/* ── GLOWING PULSE ── */
+.pulse-ring { display: inline-block; position: relative; }
+.pulse-ring::after {
+  content: ''; position: absolute; inset: -4px; border-radius: 50%;
+  border: 2px solid var(--accent); animation: pulseRing 2s ease infinite;
+}
+@keyframes pulseRing { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.5); opacity: 0; } }
+
+/* ── LOG TERMINAL ── */
+.terminal {
+  background: #0a0e1a; border: 1px solid rgba(26,111,255,0.2);
+  border-radius: 10px; padding: 1rem 1.25rem; font-family: var(--font-mono);
+  font-size: 0.75rem; min-height: 100px; max-height: 200px; overflow-y: auto;
+}
+.terminal .t-line { color: var(--accent3); margin-bottom: 0.25rem; line-height: 1.5; }
+.terminal .t-line.warn { color: var(--warn); }
+.terminal .t-line.err { color: var(--danger); }
+.terminal .t-line.info { color: var(--muted); }
+.terminal .prompt { color: var(--accent2); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>🔒</span> CyberShield <span>EDU</span></div>
+  <div class="nav-links" id="navLinks">
+    <button onclick="showPage('home')" class="active" id="nav-home">🏠 Home</button>
+    <button onclick="showPage('phishing')" id="nav-phishing">🎣 Phishing</button>
+    <button onclick="showPage('malware')" id="nav-malware">🦠 Malware</button>
+    <button onclick="showPage('ddos')" id="nav-ddos">💥 DDoS</button>
+    <button onclick="showPage('mitm')" id="nav-mitm">👤 MITM</button>
+    <button onclick="showPage('password')" id="nav-password">🔑 Passwords</button>
+    <button onclick="showPage('demo')" id="nav-demo">⚡ Live Demo</button>
+    <button onclick="showPage('quiz')" id="nav-quiz">🧠 Quiz</button>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- ══════════════════ HOME PAGE ══════════════════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">🛡️ Educational Resource 2024</div>
+    <h1>Network Threats &<br><span class="gradient">Cybersecurity Awareness</span></h1>
+    <p>Learn how cyberattacks work through safe, interactive simulations. Understanding threats is the first step to defending against them.</p>
+  </div>
+  <div class="attack-grid">
+    <div class="attack-card" style="--card-accent:#1a6fff">
+      <span class="card-icon">🎣</span>
+      <h3>Phishing Attacks</h3>
+      <p>Deceptive emails and fake websites designed to steal your credentials and personal data.</p>
+      <button class="card-btn" onclick="showPage('phishing')">Explore → </button>
+    </div>
+    <div class="attack-card" style="--card-accent:#ff4060">
+      <span class="card-icon">🦠</span>
+      <h3>Malware</h3>
+      <p>Malicious software that infects, damages, or gains unauthorized access to computer systems.</p>
+      <button class="card-btn" onclick="showPage('malware')">Explore → </button>
+    </div>
+    <div class="attack-card" style="--card-accent:#ffb020">
+      <span class="card-icon">💥</span>
+      <h3>DDoS Attacks</h3>
+      <p>Overwhelming servers with massive traffic from multiple sources to cause service outages.</p>
+      <button class="card-btn" onclick="showPage('ddos')">Explore → </button>
+    </div>
+    <div class="attack-card" style="--card-accent:#c840ff">
+      <span class="card-icon">👤</span>
+      <h3>Man-in-the-Middle</h3>
+      <p>Secretly intercepting communications between two parties to eavesdrop or manipulate data.</p>
+      <button class="card-btn" onclick="showPage('mitm')">Explore → </button>
+    </div>
+    <div class="attack-card" style="--card-accent:#00f0a0">
+      <span class="card-icon">🔑</span>
+      <h3>Password Security</h3>
+      <p>Understanding weak password vulnerabilities and best practices for creating strong credentials.</p>
+      <button class="card-btn" onclick="showPage('password')">Explore → </button>
+    </div>
+    <div class="attack-card" style="--card-accent:#00c8ff">
+      <span class="card-icon">⚡</span>
+      <h3>Live Simulations</h3>
+      <p>Interactive, safe demonstrations showing how data flows and attacks happen in real-time.</p>
+      <button class="card-btn" onclick="showPage('demo')">Explore → </button>
+    </div>
+  </div>
+
+  <div style="max-width:1100px;margin:4rem auto;padding:0 2rem;">
+    <div class="info-grid">
+      <div class="info-card" style="border-color:rgba(0,200,255,0.3)">
+        <h4>📊 Cyber Threats by the Numbers</h4>
+        <ul>
+          <li>95% of breaches involve human error</li>
+          <li>A cyberattack occurs every 39 seconds</li>
+          <li>Phishing accounts for 36% of all breaches</li>
+          <li>Average data breach cost: $4.45 million</li>
+        </ul>
+      </div>
+      <div class="info-card" style="border-color:rgba(0,240,160,0.3)">
+        <h4>🎯 Your Learning Goals</h4>
+        <ul>
+          <li>Recognize common attack patterns</li>
+          <li>Understand data flow in attacks</li>
+          <li>Apply prevention techniques</li>
+          <li>Test your knowledge with our quiz</li>
+        </ul>
+      </div>
+      <div class="info-card" style="border-color:rgba(255,176,32,0.3)">
+        <h4>⚠️ Why This Matters</h4>
+        <p style="color:var(--muted);font-size:0.83rem;line-height:1.7">Cybercrime is projected to cost the world $10.5 trillion annually by 2025. Every person who understands these threats becomes a stronger line of defense for individuals, organizations, and society.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PHISHING PAGE ══════════════════ -->
+<div id="page-phishing" class="page">
+  <div class="section-header">
+    <div class="tag" style="background:rgba(26,111,255,0.15);color:var(--accent2);border:1px solid var(--accent)">🎣 Attack Type</div>
+    <h2>Phishing Attacks</h2>
+    <p>Phishing is a social engineering technique where attackers create convincing fake communications to trick victims into revealing sensitive information like passwords and credit card numbers.</p>
+  </div>
+  <div class="content-area">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>How It Works</h4>
+        <ul>
+          <li>Attacker creates a fake login page mimicking a real site</li>
+          <li>Sends deceptive email with urgency ("Your account is suspended!")</li>
+          <li>Victim clicks link and enters credentials on fake site</li>
+          <li>Credentials sent directly to attacker's server</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Types of Phishing</h4>
+        <ul>
+          <li><strong style="color:var(--offwhite)">Spear Phishing</strong> – Targeted at specific individuals</li>
+          <li><strong style="color:var(--offwhite)">Whaling</strong> – Targets senior executives</li>
+          <li><strong style="color:var(--offwhite)">Smishing</strong> – Via SMS text messages</li>
+          <li><strong style="color:var(--offwhite)">Vishing</strong> – Via voice/phone calls</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FLOW DIAGRAM -->
+    <div class="sim-box">
+      <div class="sim-title">📊 Data Flow Visualization</div>
+      <div class="flow-diagram">
+        <div class="flow-node safe">
+          <span class="fn-icon">👤</span> Victim
+        </div>
+        <div class="flow-arrow animated"></div>
+        <div class="flow-node danger">
+          <span class="fn-icon">🕸️</span> Fake Site
+        </div>
+        <div class="flow-arrow danger-flow animated"></div>
+        <div class="flow-node danger">
+          <span class="fn-icon">😈</span> Attacker
+        </div>
+      </div>
+      <p style="text-align:center;font-size:0.78rem;color:var(--muted);margin-top:1rem">When you type credentials on a phishing site, they go directly to the attacker — not the real service.</p>
+    </div>
+
+    <!-- INTERACTIVE DEMO -->
+    <div class="sim-box">
+      <div class="sim-title">🔬 Interactive Demo – Spot the Fake Login</div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">This is a <strong style="color:var(--accent3)">safe simulation</strong> showing how a phishing login page looks. Enter anything and click Sign In to see what happens.</p>
+      
+      <div class="fake-login" id="fakeLogin">
+        <div class="fl-logo">
+          <span>🔒 SecureBank Login</span>
+        </div>
+        <input type="text" id="phishEmail" placeholder="Email address">
+        <input type="password" id="phishPass" placeholder="Password">
+        <button class="fl-btn" onclick="runPhishDemo()">Sign In</button>
+        <div class="fl-url" id="phishUrl">https://secure-bank-login.com</div>
+        <div class="fl-warn" id="phishWarn">⚠️ This is a phishing page! Your data was stolen.</div>
+      </div>
+
+      <div class="captured-data" id="capturedData">
+        <h5>🚨 DATA CAPTURED BY ATTACKER</h5>
+        <div class="data-line">username: <span id="captEmail">—</span></div>
+        <div class="data-line">password: <span id="captPass">—</span></div>
+        <div class="data-line">timestamp: <span id="captTime">—</span></div>
+        <div class="data-line">ip_address: <span>192.168.1.47 (simulated)</span></div>
+        <div style="margin-top:0.75rem;font-size:0.73rem;color:var(--muted)">⚠️ This data was NOT actually stored. For educational purposes only.</div>
+      </div>
+      <button class="sim-btn" onclick="resetPhish()" id="phishReset" style="display:none">↩ Reset Demo</button>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">🛡️ Prevention Tips</h3>
+    <div class="prevention-grid">
+      <div class="prevention-item">
+        <div class="pi-icon">🔍</div>
+        <div><h5>Check the URL</h5><p>Always verify the website address. Look for HTTPS and the correct domain spelling.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📧</div>
+        <div><h5>Scrutinize Emails</h5><p>Be suspicious of urgency. Legitimate companies rarely ask for passwords via email.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🔐</div>
+        <div><h5>Use 2FA</h5><p>Two-factor authentication prevents login even if your password is stolen.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🛡️</div>
+        <div><h5>Use a Password Manager</h5><p>Password managers won't auto-fill on fake domains, helping detect phishing sites.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MALWARE PAGE ══════════════════ -->
+<div id="page-malware" class="page">
+  <div class="section-header">
+    <div class="tag badge-danger">🦠 Attack Type</div>
+    <h2>Malware Infections</h2>
+    <p>Malware is malicious software designed to disrupt, damage, or gain unauthorized access to a computer system. Understanding how it spreads helps you avoid infection.</p>
+  </div>
+  <div class="content-area">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Types of Malware</h4>
+        <ul>
+          <li><strong style="color:var(--offwhite)">Virus</strong> – Attaches to files and self-replicates</li>
+          <li><strong style="color:var(--offwhite)">Trojan</strong> – Disguises as legitimate software</li>
+          <li><strong style="color:var(--offwhite)">Ransomware</strong> – Encrypts files, demands payment</li>
+          <li><strong style="color:var(--offwhite)">Spyware</strong> – Secretly monitors your activity</li>
+          <li><strong style="color:var(--offwhite)">Worm</strong> – Spreads across networks automatically</li>
+          <li><strong style="color:var(--offwhite)">Rootkit</strong> – Hides itself deep in the OS</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Common Entry Points</h4>
+        <ul>
+          <li>Email attachments from unknown senders</li>
+          <li>Infected USB drives or external devices</li>
+          <li>Downloading software from untrusted sites</li>
+          <li>Unpatched software vulnerabilities</li>
+          <li>Malicious ads (malvertising)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MALWARE STAGES SIMULATION -->
+    <div class="sim-box">
+      <div class="sim-title">⚙️ Infection Simulation – How Malware Spreads</div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">Watch how a malware infection progresses through a system step by step.</p>
+      
+      <div class="malware-stages" id="malwareStages">
+        <div class="stage" id="ms1">
+          <div class="stage-num">1</div>
+          <div><h5>Delivery</h5><p>User receives email with attachment "Invoice_2024.exe"</p></div>
+          <span class="stage-icon">📧</span>
+        </div>
+        <div class="stage" id="ms2">
+          <div class="stage-num">2</div>
+          <div><h5>Execution</h5><p>User opens attachment – malware code runs in background</p></div>
+          <span class="stage-icon">▶️</span>
+        </div>
+        <div class="stage" id="ms3">
+          <div class="stage-num">3</div>
+          <div><h5>Installation</h5><p>Malware installs itself, creates registry keys, hides processes</p></div>
+          <span class="stage-icon">💾</span>
+        </div>
+        <div class="stage" id="ms4">
+          <div class="stage-num">4</div>
+          <div><h5>Command & Control</h5><p>Malware contacts attacker's C&C server for instructions</p></div>
+          <span class="stage-icon">📡</span>
+        </div>
+        <div class="stage" id="ms5">
+          <div class="stage-num">5</div>
+          <div><h5>Actions on Objective</h5><p>Data exfiltration, encryption (ransomware), or lateral movement</p></div>
+          <span class="stage-icon">🔓</span>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem">
+        <div class="terminal" id="malwareLog">
+          <div class="t-line info">[SYSTEM] Simulation ready. Click "Start Infection Simulation" to begin.</div>
+        </div>
+        <button class="sim-btn" onclick="runMalwareSim()" id="malwareBtn">▶ Start Infection Simulation</button>
+      </div>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">🛡️ Prevention Techniques</h3>
+    <div class="prevention-grid">
+      <div class="prevention-item">
+        <div class="pi-icon">🛡️</div>
+        <div><h5>Antivirus Software</h5><p>Keep antivirus and anti-malware tools updated and run regular scans.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🔄</div>
+        <div><h5>Regular Updates</h5><p>Patch your OS and software immediately. Most malware exploits known vulnerabilities.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📦</div>
+        <div><h5>Trusted Sources Only</h5><p>Download software only from official websites and app stores.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">💾</div>
+        <div><h5>Regular Backups</h5><p>Maintain offline backups so ransomware can't permanently destroy your data.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ DDOS PAGE ══════════════════ -->
+<div id="page-ddos" class="page">
+  <div class="section-header">
+    <div class="tag badge-warn">💥 Attack Type</div>
+    <h2>DDoS Attacks</h2>
+    <p>A Distributed Denial of Service attack floods a server with massive traffic from thousands of compromised machines, making it unable to respond to legitimate users.</p>
+  </div>
+  <div class="content-area">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>How DDoS Works</h4>
+        <ul>
+          <li>Attacker builds a "botnet" of infected computers</li>
+          <li>Commands all bots to send requests simultaneously</li>
+          <li>Server gets overwhelmed and crashes or slows</li>
+          <li>Legitimate users can't access the service</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Types of DDoS</h4>
+        <ul>
+          <li><strong style="color:var(--offwhite)">Volumetric</strong> – Floods bandwidth with junk data</li>
+          <li><strong style="color:var(--offwhite)">Protocol</strong> – Exploits network protocol weaknesses</li>
+          <li><strong style="color:var(--offwhite)">Application Layer</strong> – Targets web server resources</li>
+          <li><strong style="color:var(--offwhite)">Amplification</strong> – Exploits DNS/NTP to multiply traffic</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DDOS SIMULATION -->
+    <div class="sim-box">
+      <div class="sim-title">🌊 Traffic Overload Simulation</div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">Watch how a server gets overwhelmed by a DDoS attack. This is a visual simulation only.</p>
+
+      <div class="ddos-visual" id="ddosVisual">
+        <div style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:0.5rem">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--muted);margin-bottom:0.25rem">BOTNET</div>
+          <div style="font-size:1.2rem">💻 Bot 1</div>
+          <div style="font-size:1.2rem">💻 Bot 2</div>
+          <div style="font-size:1.2rem">💻 Bot 3</div>
+          <div style="font-size:1.2rem" id="moreBots" style="display:none">+997 bots...</div>
+        </div>
+        <div class="server-box" id="serverBox">
+          <div style="font-size:1.8rem">🖥️</div>
+          <div style="font-size:0.72rem;margin-top:0.3rem">SERVER</div>
+          <div id="serverStatus" style="font-size:0.65rem;color:var(--accent3);margin-top:0.25rem">● ONLINE</div>
+        </div>
+      </div>
+
+      <div class="ddos-meter">
+        <div class="meter-label">
+          <span>Server Load</span>
+          <span id="loadPct">0%</span>
+        </div>
+        <div class="meter-bar"><div class="meter-fill" id="meterFill"></div></div>
+      </div>
+
+      <div class="packet-counter">
+        <div class="counter-box">
+          <div class="cval" id="reqCount">0</div>
+          <div class="clabel">Requests/sec</div>
+        </div>
+        <div class="counter-box danger">
+          <div class="cval" id="dropCount">0</div>
+          <div class="clabel">Dropped Packets</div>
+        </div>
+        <div class="counter-box">
+          <div class="cval" id="uptime">100%</div>
+          <div class="clabel">Uptime</div>
+        </div>
+      </div>
+
+      <button class="sim-btn" onclick="runDDoSSim()" id="ddosBtn">🌊 Launch DDoS Simulation</button>
+      <button class="sim-btn" onclick="resetDDoS()" id="ddosReset" style="display:none;background:var(--card-bg);border:1px solid var(--border)">↩ Reset</button>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">🛡️ Prevention Methods</h3>
+    <div class="prevention-grid">
+      <div class="prevention-item">
+        <div class="pi-icon">☁️</div>
+        <div><h5>CDN & Load Balancing</h5><p>Distribute traffic across multiple servers to absorb attack volumes.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🚧</div>
+        <div><h5>Rate Limiting</h5><p>Limit requests per IP to prevent any single source from overloading the server.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🤖</div>
+        <div><h5>Bot Detection</h5><p>Use WAF and CAPTCHA to identify and block automated attack traffic.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📊</div>
+        <div><h5>Traffic Monitoring</h5><p>Real-time anomaly detection can identify attack patterns early and trigger countermeasures.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MITM PAGE ══════════════════ -->
+<div id="page-mitm" class="page">
+  <div class="section-header">
+    <div class="tag" style="background:rgba(200,64,255,0.12);color:#d060ff;border:1px solid rgba(200,64,255,0.3)">👤 Attack Type</div>
+    <h2>Man-in-the-Middle</h2>
+    <p>In a MITM attack, the attacker secretly positions themselves between two communicating parties, intercepting and potentially altering the messages without either party knowing.</p>
+  </div>
+  <div class="content-area">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>How MITM Works</h4>
+        <ul>
+          <li>Attacker intercepts network traffic (e.g., on public WiFi)</li>
+          <li>Victim thinks they're communicating with the real server</li>
+          <li>All data passes through the attacker first</li>
+          <li>Attacker can read, modify, or inject data silently</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>MITM Techniques</h4>
+        <ul>
+          <li><strong style="color:var(--offwhite)">ARP Spoofing</strong> – Poisons local network routing</li>
+          <li><strong style="color:var(--offwhite)">SSL Stripping</strong> – Downgrades HTTPS to HTTP</li>
+          <li><strong style="color:var(--offwhite)">Evil Twin</strong> – Rogue WiFi hotspot</li>
+          <li><strong style="color:var(--offwhite)">DNS Spoofing</strong> – Redirects domain to wrong IP</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MITM SIMULATION -->
+    <div class="sim-box">
+      <div class="sim-title">🔍 MITM Interception Simulation</div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">See how an attacker intercepts communication between Alice and Bob.</p>
+
+      <div style="position:relative;padding-top:80px">
+        <div class="mitm-attacker" id="mitmAttacker">
+          <span class="mn-icon">😈</span>
+          <h5>ATTACKER</h5>
+          <div style="font-size:0.65rem;color:var(--muted);margin-top:0.25rem" id="attackerMsg">Intercepting...</div>
+        </div>
+        <div class="mitm-flow">
+          <div class="mitm-node" id="aliceNode">
+            <span class="mn-icon">👩</span>
+            <h5>Alice</h5>
+            <div style="font-size:0.65rem;color:var(--muted);margin-top:0.25rem">Sender</div>
+          </div>
+          <div style="flex:1;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));min-width:40px;position:relative">
+            <div id="mitmArrow1" style="position:absolute;right:-5px;top:50%;transform:translateY(-50%);border:5px solid transparent;border-left-color:var(--accent2)"></div>
+          </div>
+          <div class="mitm-node" id="bobNode">
+            <span class="mn-icon">👨</span>
+            <h5>Bob</h5>
+            <div style="font-size:0.65rem;color:var(--muted);margin-top:0.25rem">Receiver</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mitm-msg" id="mitmMsg1">📨 Alice sends: "Hi Bob, my password is ****"</div>
+      <div class="mitm-msg" id="mitmMsg2" style="margin-top:0.5rem">😈 Attacker reads: "Hi Bob, my password is hunter2" — then forwards modified message</div>
+      <div class="mitm-msg" id="mitmMsg3" style="margin-top:0.5rem">📨 Bob receives: "Hi Bob, my password is ****" — Bob doesn't know it was intercepted!</div>
+
+      <button class="sim-btn" onclick="runMITMSim()" id="mitmBtn">▶ Run Interception Simulation</button>
+      <button class="sim-btn" onclick="resetMITM()" id="mitmReset" style="display:none;background:var(--card-bg);border:1px solid var(--border)">↩ Reset</button>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">🛡️ Security Tips</h3>
+    <div class="prevention-grid">
+      <div class="prevention-item">
+        <div class="pi-icon">🔒</div>
+        <div><h5>Always Use HTTPS</h5><p>Look for the padlock icon. HTTPS encrypts traffic so interceptors can't read it.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📶</div>
+        <div><h5>Avoid Public WiFi</h5><p>Public networks are prime hunting grounds for MITM attackers. Use your mobile data instead.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🌐</div>
+        <div><h5>Use a VPN</h5><p>A trusted VPN encrypts all your traffic, preventing eavesdropping on untrusted networks.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🔑</div>
+        <div><h5>End-to-End Encryption</h5><p>Use apps like Signal that offer E2E encryption — even the service provider can't read your messages.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PASSWORD PAGE ══════════════════ -->
+<div id="page-password" class="page">
+  <div class="section-header">
+    <div class="tag badge-safe">🔑 Security Topic</div>
+    <h2>Password Security</h2>
+    <p>Passwords are your first line of defense. Learn how attackers crack weak passwords and how to create credentials that are virtually uncrackable.</p>
+  </div>
+  <div class="content-area">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>How Passwords Get Cracked</h4>
+        <ul>
+          <li><strong style="color:var(--offwhite)">Brute Force</strong> – Trying every combination</li>
+          <li><strong style="color:var(--offwhite)">Dictionary Attack</strong> – Common words and variations</li>
+          <li><strong style="color:var(--offwhite)">Credential Stuffing</strong> – Using leaked password lists</li>
+          <li><strong style="color:var(--offwhite)">Rainbow Tables</strong> – Precomputed hash lookups</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Time to Crack Estimates</h4>
+        <ul>
+          <li><span style="color:var(--danger)">password123</span> – Instantly cracked</li>
+          <li><span style="color:var(--warn)">P@ssw0rd!</span> – 2 minutes</li>
+          <li><span style="color:var(--warn)">Tr0ub4dor&3</span> – 3 days</li>
+          <li><span style="color:var(--accent3)">correct-horse-battery-staple</span> – 550 years</li>
+          <li><span style="color:var(--accent3)">X7#mK9$pL@qN2!</span> – 34 billion years</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PASSWORD STRENGTH METER -->
+    <div class="sim-box">
+      <div class="sim-title">🔬 Live Password Strength Analyzer</div>
+      <div class="pw-demo">
+        <div class="pw-input-wrap">
+          <input type="password" id="pwInput" placeholder="Type a password to analyze..." oninput="analyzePw(this.value)">
+          <button class="pw-toggle" onclick="togglePwVis()">👁️</button>
+        </div>
+        <div class="pw-strength"><div class="pw-strength-fill" id="pwFill"></div></div>
+        <div class="pw-label" id="pwLabel" style="color:var(--muted)">Type a password above</div>
+        <div class="pw-criteria">
+          <div class="pw-criterion" id="cr-len"><div class="dot"></div> At least 12 characters</div>
+          <div class="pw-criterion" id="cr-upper"><div class="dot"></div> Uppercase letter</div>
+          <div class="pw-criterion" id="cr-lower"><div class="dot"></div> Lowercase letter</div>
+          <div class="pw-criterion" id="cr-num"><div class="dot"></div> Number</div>
+          <div class="pw-criterion" id="cr-sym"><div class="dot"></div> Special character</div>
+          <div class="pw-criterion" id="cr-nodict"><div class="dot"></div> Not a common word</div>
+        </div>
+      </div>
+
+      <div class="pw-examples">
+        <div class="pw-example" style="border-color:rgba(255,64,96,0.3)">
+          <h5 style="color:var(--danger)">❌ Weak</h5>
+          <div class="pw-val">password123</div>
+          <div class="pw-time">Cracked: Instantly</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.4rem">Dictionary word + numbers = trivial to crack</div>
+        </div>
+        <div class="pw-example" style="border-color:rgba(255,176,32,0.3)">
+          <h5 style="color:var(--warn)">⚠️ Moderate</h5>
+          <div class="pw-val">P@ssw0rd!</div>
+          <div class="pw-time">Cracked: Minutes</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.4rem">Common substitutions are in every cracker's rules</div>
+        </div>
+        <div class="pw-example" style="border-color:rgba(0,240,160,0.3)">
+          <h5 style="color:var(--accent3)">✅ Strong</h5>
+          <div class="pw-val">Gk$7!pR#mXw2</div>
+          <div class="pw-time">Cracked: Centuries</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.4rem">Random, mixed characters with high entropy</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">🛡️ Best Practices</h3>
+    <div class="prevention-grid">
+      <div class="prevention-item">
+        <div class="pi-icon">🗝️</div>
+        <div><h5>Use a Password Manager</h5><p>Tools like Bitwarden or 1Password generate and store unique, random passwords for every site.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📱</div>
+        <div><h5>Enable 2FA Everywhere</h5><p>Even if your password is stolen, 2FA means attackers still can't log in without your device.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🔁</div>
+        <div><h5>Never Reuse Passwords</h5><p>One breach exposes all accounts that share the same password. Use unique credentials everywhere.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📋</div>
+        <div><h5>Passphrases Work Too</h5><p>4+ random words ("correct-horse-battery-staple") are long, memorable, and hard to crack.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ LIVE DEMO PAGE ══════════════════ -->
+<div id="page-demo" class="page">
+  <div class="section-header">
+    <div class="tag" style="background:rgba(0,200,255,0.12);color:var(--accent2);border:1px solid rgba(0,200,255,0.3)">⚡ Interactive</div>
+    <h2>Live Demo Center</h2>
+    <p>All simulations are 100% safe and educational. No real attacks are performed or enabled.</p>
+  </div>
+  <div class="content-area">
+    <div class="demo-tabs">
+      <button class="demo-tab active" onclick="switchDemo('network')">🌐 Network Traffic</button>
+      <button class="demo-tab" onclick="switchDemo('encrypt')">🔐 Encryption Demo</button>
+      <button class="demo-tab" onclick="switchDemo('scan')">🔎 Port Scan Sim</button>
+    </div>
+
+    <!-- Network Traffic -->
+    <div class="demo-panel active" id="demo-network">
+      <div class="sim-box">
+        <div class="sim-title">🌐 Network Packet Flow Visualization</div>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">Visualize how data packets travel from your browser to a server and back.</p>
+        <div style="display:flex;flex-direction:column;gap:1rem" id="packetLog">
+          <div class="flow-diagram" style="margin:0">
+            <div class="flow-node safe"><span class="fn-icon">🖥️</span>Your PC</div>
+            <div class="flow-arrow animated"></div>
+            <div class="flow-node"><span class="fn-icon">🔀</span>Router</div>
+            <div class="flow-arrow animated"></div>
+            <div class="flow-node"><span class="fn-icon">🌐</span>ISP</div>
+            <div class="flow-arrow animated"></div>
+            <div class="flow-node safe"><span class="fn-icon">🖥️</span>Server</div>
+          </div>
+        </div>
+        <div class="terminal" id="netLog" style="margin-top:1.5rem">
+          <div class="t-line info">[NETWORK] Ready to simulate packet flow...</div>
+        </div>
+        <button class="sim-btn" onclick="runNetworkSim()">▶ Simulate HTTP Request</button>
+        <button class="sim-btn" onclick="runNetworkSim(true)" style="background:rgba(255,64,96,0.2);border:1px solid var(--danger);margin-left:0.5rem">⚠️ Simulate with Attacker</button>
+      </div>
+    </div>
+
+    <!-- Encryption Demo -->
+    <div class="demo-panel" id="demo-encrypt">
+      <div class="sim-box">
+        <div class="sim-title">🔐 Encryption / Decryption Demo</div>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">See how encryption protects your data in transit. This uses a simple Caesar cipher for illustration.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div>
+            <div style="font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em">Plain Text</div>
+            <textarea id="encPlain" style="width:100%;background:var(--deep-blue);border:1px solid var(--border);border-radius:10px;padding:1rem;color:var(--offwhite);font-family:var(--font-mono);font-size:0.83rem;resize:vertical;min-height:100px;outline:none" placeholder="Type a message to encrypt...">Hello, send my bank details to Bob!</textarea>
+          </div>
+          <div>
+            <div style="font-size:0.78rem;font-weight:700;color:var(--accent3);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em">Encrypted (Intercepted)</div>
+            <div id="encResult" style="background:var(--deep-blue);border:1px solid rgba(0,240,160,0.3);border-radius:10px;padding:1rem;font-family:var(--font-mono);font-size:0.83rem;min-height:100px;color:var(--accent3);word-break:break-all">Click encrypt to see cipher text</div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
+          <label style="font-size:0.8rem;color:var(--muted)">Shift Key: </label>
+          <input type="range" id="shiftKey" min="1" max="25" value="13" oninput="document.getElementById('shiftVal').textContent=this.value" style="flex:1;max-width:200px">
+          <span id="shiftVal" style="font-family:var(--font-mono);color:var(--accent2)">13</span>
+        </div>
+        <button class="sim-btn" onclick="runEncrypt()">🔐 Encrypt Message</button>
+        <button class="sim-btn" onclick="runDecrypt()" style="background:rgba(0,240,160,0.15);border:1px solid var(--accent3);margin-left:0.5rem">🔓 Decrypt</button>
+        <div style="margin-top:1rem;font-size:0.78rem;color:var(--muted);line-height:1.6">💡 <strong style="color:var(--offwhite)">Real encryption</strong> (AES-256, RSA) is vastly more complex than this demo, making brute-force cracking computationally infeasible.</div>
+      </div>
+    </div>
+
+    <!-- Port Scan Sim -->
+    <div class="demo-panel" id="demo-scan">
+      <div class="sim-box">
+        <div class="sim-title">🔎 Port Scan Simulation</div>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">Attackers often scan for open ports to find entry points. This shows what a scan might reveal.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:0.5rem;margin-bottom:1.5rem" id="portGrid">
+        </div>
+        <button class="sim-btn" onclick="runPortScan()" id="scanBtn">🔎 Run Port Scan</button>
+        <div style="margin-top:1rem;font-size:0.78rem;color:var(--muted)">💡 Open ports with unused services are attack vectors. Always close ports you don't need with a firewall.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ QUIZ PAGE ══════════════════ -->
+<div id="page-quiz" class="page">
+  <div class="section-header">
+    <div class="tag" style="background:rgba(0,240,160,0.12);color:var(--accent3);border:1px solid rgba(0,240,160,0.3)">🧠 Knowledge Test</div>
+    <h2>Cybersecurity Quiz</h2>
+    <p>Test your knowledge with 8 questions covering everything you've learned. Can you get a perfect score?</p>
+  </div>
+  <div class="content-area">
+    <div class="quiz-box">
+      <div class="quiz-progress" id="quizProgress"></div>
+      <div id="quizContent">
+        <div class="quiz-q" id="quizQ"></div>
+        <div class="quiz-options" id="quizOpts"></div>
+        <div class="quiz-feedback" id="quizFeedback"></div>
+        <button class="quiz-next" id="quizNext" onclick="nextQuestion()">Next Question →</button>
+      </div>
+      <div class="quiz-score" id="quizScore">
+        <div class="score-num" id="scoreNum">0/8</div>
+        <p>Quiz Complete!</p>
+        <p id="scoreMsg" style="margin-top:0.5rem;font-size:0.85rem"></p>
+        <button class="quiz-restart" onclick="startQuiz()">↩ Try Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div style="text-align:center;margin-bottom:2rem">
+      <div style="font-size:1.1rem;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem">🔒 Daily Cybersecurity Tips</div>
+      <div style="font-size:0.82rem;color:var(--muted)">Protect yourself with these essential security habits</div>
+    </div>
+    <div class="footer-tips">
+      <div class="footer-tip">
+        <h5>🔄 Update Regularly</h5>
+        <p>Enable automatic updates for your OS and apps. Most attacks exploit known vulnerabilities in outdated software.</p>
+      </div>
+      <div class="footer-tip">
+        <h5>📧 Think Before Clicking</h5>
+        <p>Hover over links before clicking. If an email creates urgency or asks for credentials, it's likely phishing.</p>
+      </div>
+      <div class="footer-tip">
+        <h5>📶 Secure Your WiFi</h5>
+        <p>Use WPA3 encryption on home networks. Never use default router passwords. Disable WPS.</p>
+      </div>
+      <div class="footer-tip">
+        <h5>🔑 Unique Passwords</h5>
+        <p>Use a different strong password for every account. A password manager makes this easy and secure.</p>
+      </div>
+      <div class="footer-tip">
+        <h5>💾 Backup Your Data</h5>
+        <p>Follow the 3-2-1 rule: 3 copies, 2 media types, 1 offsite. Ransomware cannot destroy what it cannot reach.</p>
+      </div>
+      <div class="footer-tip">
+        <h5>👁️ Monitor Accounts</h5>
+        <p>Enable login notifications. Check haveibeenpwned.com to see if your email appears in data breaches.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <strong>CyberShield EDU</strong> — For educational purposes only. All simulations are safe and do not perform real attacks.<br>
+      <span style="margin-top:0.3rem;display:inline-block">Built to raise cybersecurity awareness 🛡️</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── NAVIGATION ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const btn = document.getElementById('nav-' + id);
+  if (btn) btn.classList.add('active');
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ── PHISHING DEMO ──
+function runPhishDemo() {
+  const email = document.getElementById('phishEmail').value || 'user@example.com';
+  const pass = document.getElementById('phishPass').value || 'mypassword';
+  const fakeLogin = document.getElementById('fakeLogin');
+  fakeLogin.classList.add('exposed');
+  document.getElementById('phishWarn').style.display = 'block';
+  document.getElementById('phishUrl').style.color = '#ff4060';
+  document.getElementById('captEmail').textContent = email;
+  document.getElementById('captPass').textContent = '*'.repeat(pass.length) + ' [captured]';
+  document.getElementById('captTime').textContent = new Date().toISOString();
+  const cap = document.getElementById('capturedData');
+  cap.style.display = 'block';
+  document.getElementById('phishReset').style.display = 'inline-block';
+}
+
+function resetPhish() {
+  document.getElementById('fakeLogin').classList.remove('exposed');
+  document.getElementById('phishWarn').style.display = 'none';
+  document.getElementById('phishUrl').style.color = '#888';
+  document.getElementById('capturedData').style.display = 'none';
+  document.getElementById('phishReset').style.display = 'none';
+  document.getElementById('phishEmail').value = '';
+  document.getElementById('phishPass').value = '';
+}
+
+// ── MALWARE SIM ──
+let malwareRunning = false;
+function runMalwareSim() {
+  if (malwareRunning) return;
+  malwareRunning = true;
+  document.getElementById('malwareBtn').disabled = true;
+  const log = document.getElementById('malwareLog');
+  const stages = [
+    { id: 'ms1', delay: 500, logs: [
+      { t: 'info', msg: '[EMAIL] Incoming: "Invoice_2024.exe" from unknown@suspicious.net' },
+      { t: 'warn', msg: '[USER] File opened by user... executing.' },
+    ]},
+    { id: 'ms2', delay: 2500, logs: [
+      { t: 'err', msg: '[EXEC] Malware process started: svchost32.exe (hidden)' },
+      { t: 'warn', msg: '[PROC] Injecting into explorer.exe...' },
+    ]},
+    { id: 'ms3', delay: 4500, logs: [
+      { t: 'err', msg: '[REG] HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run → persistence set' },
+      { t: 'err', msg: '[FILE] Copying to C:\\Windows\\System32\\malware.dll' },
+    ]},
+    { id: 'ms4', delay: 6500, logs: [
+      { t: 'warn', msg: '[NET] Connecting to C2: 195.161.x.x:4444' },
+      { t: 'info', msg: '[C2] Awaiting commands from attacker...' },
+    ]},
+    { id: 'ms5', delay: 8500, logs: [
+      { t: 'err', msg: '[EXFIL] Sending /Documents/ to attacker FTP server' },
+      { t: 'err', msg: '[RANSOM] Encrypting files... README_RANSOM.txt created' },
+      { t: 'info', msg: '[SIM] Simulation complete. In real life: call incident response.' },
+    ]},
+  ];
+
+  log.innerHTML = '<div class="t-line info">[SIM] Starting malware infection simulation...</div>';
+
+  stages.forEach(stage => {
+    setTimeout(() => {
+      document.getElementById(stage.id).classList.add('active');
+      stage.logs.forEach((l, i) => {
+        setTimeout(() => {
+          const line = document.createElement('div');
+          line.className = `t-line ${l.t}`;
+          line.innerHTML = `<span class="prompt">&gt; </span>${l.msg}`;
+          log.appendChild(line);
+          log.scrollTop = log.scrollHeight;
+        }, i * 500);
+      });
+    }, stage.delay);
+  });
+
+  setTimeout(() => {
+    malwareRunning = false;
+    document.getElementById('malwareBtn').disabled = false;
+    document.getElementById('malwareBtn').textContent = '↩ Restart Simulation';
+    document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+  }, 11000);
+}
+
+// ── DDOS SIM ──
+let ddosInterval = null;
+let ddosLoad = 0;
+let ddosReqs = 0;
+let ddosDrops = 0;
+
+function runDDoSSim() {
+  document.getElementById('ddosBtn').disabled = true;
+  document.getElementById('ddosReset').style.display = 'inline-block';
+  document.getElementById('moreBots').style.display = 'block';
+  
+  ddosInterval = setInterval(() => {
+    ddosLoad = Math.min(ddosLoad + Math.random() * 8 + 3, 100);
+    ddosReqs += Math.floor(Math.random() * 5000 + 8000);
+    
+    document.getElementById('meterFill').style.width = ddosLoad + '%';
+    document.getElementById('loadPct').textContent = Math.round(ddosLoad) + '%';
+    document.getElementById('reqCount').textContent = (ddosReqs / 1000).toFixed(1) + 'K';
+    
+    if (ddosLoad > 60) {
+      ddosDrops += Math.floor((ddosLoad - 60) * 200);
+      document.getElementById('dropCount').textContent = (ddosDrops / 1000).toFixed(1) + 'K';
+    }
+    
+    const uptime = Math.max(0, Math.round(100 - (ddosLoad - 20) * 1.2));
+    document.getElementById('uptime').textContent = uptime + '%';
+    
+    if (ddosLoad > 70) {
+      const server = document.getElementById('serverBox');
+      server.classList.add('overloaded');
+      document.getElementById('serverStatus').textContent = '● DEGRADED';
+      document.getElementById('serverStatus').style.color = 'var(--warn)';
+    }
+    if (ddosLoad >= 95) {
+      document.getElementById('serverStatus').textContent = '● OFFLINE';
+      document.getElementById('serverStatus').style.color = 'var(--danger)';
+      clearInterval(ddosInterval);
+    }
+
+    // Add packet dot
+    const visual = document.getElementById('ddosVisual');
+    const dot = document.createElement('div');
+    dot.className = 'request-dot';
+    dot.style.top = (30 + Math.random() * 40) + '%';
+    dot.style.animationDelay = (Math.random() * 0.5) + 's';
+    visual.appendChild(dot);
+    setTimeout(() => dot.remove(), 2000);
+  }, 300);
+}
+
+function resetDDoS() {
+  clearInterval(ddosInterval);
+  ddosLoad = 0; ddosReqs = 0; ddosDrops = 0;
+  document.getElementById('meterFill').style.width = '0%';
+  document.getElementById('loadPct').textContent = '0%';
+  document.getElementById('reqCount').textContent = '0';
+  document.getElementById('dropCount').textContent = '0';
+  document.getElementById('uptime').textContent = '100%';
+  document.getElementById('serverBox').classList.remove('overloaded');
+  document.getElementById('serverStatus').textContent = '● ONLINE';
+  document.getElementById('serverStatus').style.color = 'var(--accent3)';
+  document.getElementById('ddosBtn').disabled = false;
+  document.getElementById('ddosReset').style.display = 'none';
+  document.getElementById('moreBots').style.display = 'none';
+  document.querySelectorAll('.request-dot').forEach(d => d.remove());
+}
+
+// ── MITM SIM ──
+function runMITMSim() {
+  document.getElementById('mitmBtn').disabled = true;
+  document.getElementById('mitmReset').style.display = 'inline-block';
+  
+  setTimeout(() => {
+    document.getElementById('aliceNode').classList.add('highlighted');
+    document.getElementById('mitmMsg1').classList.add('visible');
+  }, 500);
+  
+  setTimeout(() => {
+    document.getElementById('mitmAttacker').classList.add('visible');
+    document.getElementById('attackerMsg').textContent = '🔍 Reading message...';
+  }, 1800);
+  
+  setTimeout(() => {
+    document.getElementById('mitmMsg2').classList.add('visible');
+    document.getElementById('attackerMsg').textContent = '✏️ Modifying...';
+  }, 3200);
+  
+  setTimeout(() => {
+    document.getElementById('bobNode').classList.add('highlighted');
+    document.getElementById('mitmMsg3').classList.add('visible');
+    document.getElementById('attackerMsg').textContent = '✅ Forwarded';
+  }, 4800);
+}
+
+function resetMITM() {
+  document.getElementById('mitmBtn').disabled = false;
+  document.getElementById('mitmReset').style.display = 'none';
+  document.getElementById('aliceNode').classList.remove('highlighted');
+  document.getElementById('bobNode').classList.remove('highlighted');
+  document.getElementById('mitmAttacker').classList.remove('visible');
+  ['mitmMsg1','mitmMsg2','mitmMsg3'].forEach(id => document.getElementById(id).classList.remove('visible'));
+}
+
+// ── PASSWORD ANALYZER ──
+const commonWords = ['password','qwerty','letmein','welcome','monkey','dragon','master','iloveyou','sunshine','princess'];
+
+function analyzePw(pw) {
+  const criteria = {
+    len: pw.length >= 12,
+    upper: /[A-Z]/.test(pw),
+    lower: /[a-z]/.test(pw),
+    num: /[0-9]/.test(pw),
+    sym: /[^a-zA-Z0-9]/.test(pw),
+    nodict: !commonWords.some(w => pw.toLowerCase().includes(w))
+  };
+  
+  Object.keys(criteria).forEach(k => {
+    const el = document.getElementById('cr-' + k);
+    if (el) el.classList.toggle('met', criteria[k]);
+  });
+  
+  const score = Object.values(criteria).filter(Boolean).length;
+  const fill = document.getElementById('pwFill');
+  const label = document.getElementById('pwLabel');
+  
+  if (pw.length === 0) {
+    fill.style.width = '0%';
+    label.textContent = 'Type a password above';
+    label.style.color = 'var(--muted)';
+    return;
+  }
+  
+  const pct = (score / 6) * 100;
+  fill.style.width = pct + '%';
+  
+  if (score <= 2) {
+    fill.style.background = 'var(--danger)';
+    label.textContent = '🔴 Very Weak — cracked in seconds';
+    label.style.color = 'var(--danger)';
+  } else if (score <= 3) {
+    fill.style.background = 'var(--warn)';
+    label.textContent = '🟡 Weak — cracked in minutes to hours';
+    label.style.color = 'var(--warn)';
+  } else if (score <= 4) {
+    fill.style.background = '#90c040';
+    label.textContent = '🟢 Moderate — may take days to weeks';
+    label.style.color = '#90c040';
+  } else if (score === 5) {
+    fill.style.background = 'var(--accent3)';
+    label.textContent = '✅ Strong — years to crack';
+    label.style.color = 'var(--accent3)';
+  } else {
+    fill.style.background = 'linear-gradient(90deg, var(--accent3), var(--accent2))';
+    label.textContent = '🏆 Excellent — virtually uncrackable';
+    label.style.color = 'var(--accent2)';
+  }
+}
+
+function togglePwVis() {
+  const inp = document.getElementById('pwInput');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+// ── NETWORK SIM ──
+function runNetworkSim(withAttacker = false) {
+  const log = document.getElementById('netLog');
+  log.innerHTML = '';
+  const steps = withAttacker ? [
+    { t: 'info', msg: '[CLIENT] Sending HTTP GET request to bank.com...' },
+    { t: 'info', msg: '[ROUTER] Packet routed to gateway...' },
+    { t: 'err', msg: '[MITM] ⚠️ Attacker intercepted packet at hop 2!' },
+    { t: 'err', msg: '[MITM] Reading headers: Authorization: Bearer eyJ0e...' },
+    { t: 'warn', msg: '[MITM] Forwarding modified packet to server...' },
+    { t: 'info', msg: '[SERVER] Response sent (unaware of interception)' },
+    { t: 'err', msg: '[MITM] Intercepting response, extracting session token...' },
+    { t: 'err', msg: '[ALERT] Use HTTPS to prevent this attack!' },
+  ] : [
+    { t: 'info', msg: '[CLIENT] DNS lookup: bank.com → 104.22.x.x' },
+    { t: 'info', msg: '[CLIENT] TCP handshake initiated (SYN)' },
+    { t: 'info', msg: '[SERVER] TCP handshake complete (SYN-ACK → ACK)' },
+    { t: 'info', msg: '[TLS] TLS 1.3 handshake — certificates verified ✓' },
+    { t: 'info', msg: '[CLIENT] HTTP GET /dashboard (encrypted)' },
+    { t: 'info', msg: '[SERVER] HTTP 200 OK — page sent (encrypted)' },
+    { t: 'info', msg: '[TLS] All data encrypted. Attacker sees only ciphertext.' },
+    { t: 'info', msg: '✅ Secure connection complete!' },
+  ];
+  
+  steps.forEach((s, i) => {
+    setTimeout(() => {
+      const line = document.createElement('div');
+      line.className = `t-line ${s.t}`;
+      line.innerHTML = `<span class="prompt">&gt; </span>${s.msg}`;
+      log.appendChild(line);
+      log.scrollTop = log.scrollHeight;
+    }, i * 600);
+  });
+}
+
+// ── ENCRYPTION DEMO ──
+function caesarCipher(text, shift, decode = false) {
+  if (decode) shift = 26 - shift;
+  return text.split('').map(c => {
+    if (/[a-z]/.test(c)) return String.fromCharCode(((c.charCodeAt(0) - 97 + shift) % 26) + 97);
+    if (/[A-Z]/.test(c)) return String.fromCharCode(((c.charCodeAt(0) - 65 + shift) % 26) + 65);
+    return c;
+  }).join('');
+}
+
+function runEncrypt() {
+  const text = document.getElementById('encPlain').value;
+  const shift = parseInt(document.getElementById('shiftKey').value);
+  document.getElementById('encResult').textContent = caesarCipher(text, shift);
+}
+
+function runDecrypt() {
+  const enc = document.getElementById('encResult').textContent;
+  const shift = parseInt(document.getElementById('shiftKey').value);
+  document.getElementById('encPlain').value = caesarCipher(enc, shift, true);
+}
+
+// ── PORT SCAN SIM ──
+const portDefs = [
+  { port: 22, svc: 'SSH', status: 'open', risk: 'medium' },
+  { port: 80, svc: 'HTTP', status: 'open', risk: 'low' },
+  { port: 443, svc: 'HTTPS', status: 'open', risk: 'low' },
+  { port: 21, svc: 'FTP', status: 'open', risk: 'high' },
+  { port: 3306, svc: 'MySQL', status: 'open', risk: 'high' },
+  { port: 23, svc: 'Telnet', status: 'open', risk: 'high' },
+  { port: 8080, svc: 'HTTP-Alt', status: 'filtered', risk: 'low' },
+  { port: 25, svc: 'SMTP', status: 'closed', risk: 'low' },
+  { port: 53, svc: 'DNS', status: 'open', risk: 'medium' },
+  { port: 3389, svc: 'RDP', status: 'open', risk: 'high' },
+  { port: 445, svc: 'SMB', status: 'closed', risk: 'low' },
+  { port: 8443, svc: 'HTTPS-Alt', status: 'filtered', risk: 'low' },
+];
+
+function runPortScan() {
+  const grid = document.getElementById('portGrid');
+  grid.innerHTML = '';
+  document.getElementById('scanBtn').disabled = true;
+  
+  portDefs.forEach((p, i) => {
+    setTimeout(() => {
+      const colors = { open: p.risk === 'high' ? 'var(--danger)' : p.risk === 'medium' ? 'var(--warn)' : 'var(--accent3)', filtered: 'var(--muted)', closed: 'rgba(255,255,255,0.2)' };
+      const bg = { open: p.risk === 'high' ? 'rgba(255,64,96,0.1)' : p.risk === 'medium' ? 'rgba(255,176,32,0.08)' : 'rgba(0,240,160,0.08)', filtered: 'var(--glass)', closed: 'var(--deep-blue)' };
+      const div = document.createElement('div');
+      div.style.cssText = `background:${bg[p.status]};border:1px solid ${colors[p.status]};border-radius:10px;padding:0.75rem;text-align:center;animation:fadeIn 0.3s ease`;
+      div.innerHTML = `<div style="font-family:var(--font-mono);font-size:0.85rem;font-weight:700;color:${colors[p.status]}">${p.port}</div><div style="font-size:0.65rem;color:var(--muted);margin-top:0.2rem">${p.svc}</div><div style="font-size:0.6rem;margin-top:0.2rem;font-weight:700;color:${colors[p.status]}">${p.status.toUpperCase()}</div>`;
+      grid.appendChild(div);
+      if (i === portDefs.length - 1) document.getElementById('scanBtn').disabled = false;
+    }, i * 150);
+  });
+}
+
+function switchDemo(id) {
+  document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('demo-' + id).classList.add('active');
+}
+
+// ── QUIZ ──
+const questions = [
+  { q: "What is phishing?", opts: ["A type of firewall", "Tricking users into revealing info via fake communications", "A network protocol", "A type of encryption"], ans: 1, feedback: "Phishing uses deceptive emails/websites to trick victims into revealing passwords and personal data. Always verify the sender and URL before clicking." },
+  { q: "Which of these is a sign of a phishing email?", opts: ["Comes from a verified company domain", "Contains urgent language like 'Act now or your account will be deleted!'", "Has no attachments or links", "Uses your full name correctly"], ans: 1, feedback: "Urgency is a key phishing tactic designed to pressure you into acting before thinking. Legitimate companies rarely create this kind of panic." },
+  { q: "What does DDoS stand for?", opts: ["Direct Data over Security System", "Distributed Denial of Service", "Dual Data over Server System", "Dynamic Denial of Security"], ans: 1, feedback: "DDoS = Distributed Denial of Service. Attackers use thousands of compromised machines to flood a server with traffic until it crashes." },
+  { q: "Which password is the strongest?", opts: ["password123", "P@ssw0rd", "Tr0ub4dor&3", "xK#9mP$2wL!n"], ans: 3, feedback: "Random character combinations with mixed types are strongest. Predictable substitutions (@ for a, 0 for o) are well-known to password crackers." },
+  { q: "In a Man-in-the-Middle attack, what does the attacker do?", opts: ["Deletes messages between two parties", "Secretly intercepts and potentially modifies communications", "Sends spam emails to both parties", "Blocks internet access to a user"], ans: 1, feedback: "The attacker secretly positions themselves in the communication channel, reading and possibly modifying data without either party's knowledge." },
+  { q: "What is ransomware?", opts: ["Software that blocks ads", "Malware that encrypts your files and demands payment", "A type of VPN", "A browser plugin"], ans: 1, feedback: "Ransomware encrypts your data and demands a ransom payment (usually cryptocurrency) for the decryption key. Regular offline backups are the best defense." },
+  { q: "Which is the BEST practice for passwords?", opts: ["Use one strong password for all accounts", "Write passwords on sticky notes near your computer", "Use a password manager to create unique passwords per site", "Use your birthdate combined with your name"], ans: 2, feedback: "Password managers generate unique, random passwords for each account. This means one breach can't compromise all your accounts." },
+  { q: "What does HTTPS protect against?", opts: ["All types of malware", "Eavesdropping by encrypting data in transit", "Phishing emails", "DDoS attacks"], ans: 1, feedback: "HTTPS encrypts data between your browser and the server, preventing eavesdroppers from reading it. It doesn't protect against all threats — always stay vigilant." },
+];
+
+let currentQ = 0, score = 0, answered = false;
+
+function startQuiz() {
+  currentQ = 0; score = 0; answered = false;
+  document.getElementById('quizContent').style.display = 'block';
+  document.getElementById('quizScore').style.display = 'none';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  document.getElementById('quizQ').textContent = `Q${currentQ + 1}. ${q.q}`;
+  document.getElementById('quizOpts').innerHTML = q.opts.map((o, i) => 
+    `<button class="quiz-opt" onclick="selectAnswer(${i})">${String.fromCharCode(65+i)}) ${o}</button>`
+  ).join('');
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  document.getElementById('quizFeedback').style.display = 'none';
+  document.getElementById('quizNext').style.display = 'none';
+  answered = false;
+  
+  const progress = document.getElementById('quizProgress');
+  progress.innerHTML = questions.map((_, i) => 
+    `<div class="quiz-dot ${i < currentQ ? 'done' : i === currentQ ? 'current' : ''}"></div>`
+  ).join('');
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = questions[currentQ];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts[idx].classList.add(idx === q.ans ? 'correct' : 'wrong');
+  opts[q.ans].classList.add('correct');
+  if (idx === q.ans) score++;
+  
+  const fb = document.getElementById('quizFeedback');
+  fb.textContent = (idx === q.ans ? '✅ Correct! ' : '❌ Incorrect. ') + q.feedback;
+  fb.className = 'quiz-feedback show ' + (idx === q.ans ? 'correct' : 'wrong');
+  fb.style.display = 'block';
+  document.getElementById('quizNext').style.display = 'inline-block';
+  document.getElementById('quizNext').textContent = currentQ < questions.length - 1 ? 'Next Question →' : 'See Results';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= questions.length) showScore();
+  else renderQuestion();
+}
+
+function showScore() {
+  document.getElementById('quizContent').style.display = 'none';
+  const scoreDiv = document.getElementById('quizScore');
+  scoreDiv.style.display = 'block';
+  document.getElementById('scoreNum').textContent = `${score}/${questions.length}`;
+  const msgs = ['Keep studying! Revisit each topic and try again.', 'Good effort! Review the sections you missed.', 'Well done! You have solid cybersecurity knowledge.', 'Outstanding! You\'re a cybersecurity champion! 🏆'];
+  const msgIdx = score <= 2 ? 0 : score <= 4 ? 1 : score <= 6 ? 2 : 3;
+  document.getElementById('scoreMsg').textContent = msgs[msgIdx];
+}
+
+// ── INIT ──
+startQuiz();
+initPortGrid();
+
+function initPortGrid() {
+  const grid = document.getElementById('portGrid');
+  grid.innerHTML = '<div style="font-size:0.85rem;color:var(--muted);padding:1rem">Click "Run Port Scan" to simulate network discovery</div>';
+}
+</script>
+</body>
+</html>
