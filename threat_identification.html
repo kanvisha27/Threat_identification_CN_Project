@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Threats & Cybersecurity Awareness</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="threat_identification.css">
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>🔒</span> CyberShield <span>EDU</span></div>
+  <div class="nav-links" id="navLinks">
+    <button onclick="showPage('home')" class="active" id="nav-home">🏠 Home</button>
+    <button onclick="showPage('phishing')" id="nav-phishing">🎣 Phishing</button>
+    <button onclick="showPage('malware')" id="nav-malware">🦠 Malware</button>
+    <button onclick="showPage('ddos')" id="nav-ddos">💥 DDoS</button>
+    <button onclick="showPage('mitm')" id="nav-mitm">👤 MITM</button>
+    <button onclick="showPage('password')" id="nav-password">🔑 Passwords</button>
+    <button onclick="showPage('demo')" id="nav-demo">⚡ Live Demo</button>
+    <button onclick="showPage('quiz')" id="nav-quiz">🧠 Quiz</button>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- ══════════════════ HOME PAGE ══════════════════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">🛡️ Educational Resource 2024</div>
+    <h1>Network Threats &<br><span class="gradient">Cybersecurity Awareness</span></h1>
+    <p>Learn how cyberattacks work through safe, interactive simulations. Understanding threats is the first step to defending against them.</p>
+  </div>
+  <div class="attack-grid">
+    <div class="attack-card" style="--card-accent:#1a6fff">
+      <span class="card-icon">🎣</span>
+      <h3>Phishing Attacks</h3>
+      <p>Deceptive emails and fake websites designed to steal your credentials and personal data.</p>
+      <button class="card-btn" onclick="showPage('phishing')">Explore → </button>
+    </div>
+    <div class="attack-card" style="--card-accent:#ff4060">
+      <span class="card-icon">🦠</span>
+      <h3>Malware</h3>
+      <p>Malicious software that infects, damages, or gains unauthorized access to computer systems.</p>
+      <button class="card-btn" onclick="showPage('malware')">Explore → </button>
+    </div>
+    <div class="attack-card" style="--card-accent:#ffb020">
+      <span class="card-icon">💥</span>
+      <h3>DDoS Attacks</h3>
+      <p>Overwhelming servers with massive traffic from multiple sources to cause service outages.</p>
+      <button class="card-btn" onclick="showPage('ddos')">Explore → </button>
+    </div>
+    <div class="attack-card" style="--card-accent:#c840ff">
+      <span class="card-icon">👤</span>
+      <h3>Man-in-the-Middle</h3>
+      <p>Secretly intercepting communications between two parties to eavesdrop or manipulate data.</p>
+      <button class="card-btn" onclick="showPage('mitm')">Explore → </button>
+    </div>
+    <div class="attack-card" style="--card-accent:#00f0a0">
+      <span class="card-icon">🔑</span>
+      <h3>Password Security</h3>
+      <p>Understanding weak password vulnerabilities and best practices for creating strong credentials.</p>
+      <button class="card-btn" onclick="showPage('password')">Explore → </button>
+    </div>
+    <div class="attack-card" style="--card-accent:#00c8ff">
+      <span class="card-icon">⚡</span>
+      <h3>Live Simulations</h3>
+      <p>Interactive, safe demonstrations showing how data flows and attacks happen in real-time.</p>
+      <button class="card-btn" onclick="showPage('demo')">Explore → </button>
+    </div>
+  </div>
+
+  <div style="max-width:1100px;margin:4rem auto;padding:0 2rem;">
+    <div class="info-grid">
+      <div class="info-card" style="border-color:rgba(0,200,255,0.3)">
+        <h4>📊 Cyber Threats by the Numbers</h4>
+        <ul>
+          <li>95% of breaches involve human error</li>
+          <li>A cyberattack occurs every 39 seconds</li>
+          <li>Phishing accounts for 36% of all breaches</li>
+          <li>Average data breach cost: $4.45 million</li>
+        </ul>
+      </div>
+      <div class="info-card" style="border-color:rgba(0,240,160,0.3)">
+        <h4>🎯 Your Learning Goals</h4>
+        <ul>
+          <li>Recognize common attack patterns</li>
+          <li>Understand data flow in attacks</li>
+          <li>Apply prevention techniques</li>
+          <li>Test your knowledge with our quiz</li>
+        </ul>
+      </div>
+      <div class="info-card" style="border-color:rgba(255,176,32,0.3)">
+        <h4>⚠️ Why This Matters</h4>
+        <p style="color:var(--muted);font-size:0.83rem;line-height:1.7">Cybercrime is projected to cost the world $10.5 trillion annually by 2025. Every person who understands these threats becomes a stronger line of defense for individuals, organizations, and society.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PHISHING PAGE ══════════════════ -->
+<div id="page-phishing" class="page">
+  <div class="section-header">
+    <div class="tag" style="background:rgba(26,111,255,0.15);color:var(--accent2);border:1px solid var(--accent)">🎣 Attack Type</div>
+    <h2>Phishing Attacks</h2>
+    <p>Phishing is a social engineering technique where attackers create convincing fake communications to trick victims into revealing sensitive information like passwords and credit card numbers.</p>
+  </div>
+  <div class="content-area">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>How It Works</h4>
+        <ul>
+          <li>Attacker creates a fake login page mimicking a real site</li>
+          <li>Sends deceptive email with urgency ("Your account is suspended!")</li>
+          <li>Victim clicks link and enters credentials on fake site</li>
+          <li>Credentials sent directly to attacker's server</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Types of Phishing</h4>
+        <ul>
+          <li><strong style="color:var(--offwhite)">Spear Phishing</strong> – Targeted at specific individuals</li>
+          <li><strong style="color:var(--offwhite)">Whaling</strong> – Targets senior executives</li>
+          <li><strong style="color:var(--offwhite)">Smishing</strong> – Via SMS text messages</li>
+          <li><strong style="color:var(--offwhite)">Vishing</strong> – Via voice/phone calls</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FLOW DIAGRAM -->
+    <div class="sim-box">
+      <div class="sim-title">📊 Data Flow Visualization</div>
+      <div class="flow-diagram">
+        <div class="flow-node safe">
+          <span class="fn-icon">👤</span> Victim
+        </div>
+        <div class="flow-arrow animated"></div>
+        <div class="flow-node danger">
+          <span class="fn-icon">🕸️</span> Fake Site
+        </div>
+        <div class="flow-arrow danger-flow animated"></div>
+        <div class="flow-node danger">
+          <span class="fn-icon">😈</span> Attacker
+        </div>
+      </div>
+      <p style="text-align:center;font-size:0.78rem;color:var(--muted);margin-top:1rem">When you type credentials on a phishing site, they go directly to the attacker — not the real service.</p>
+    </div>
+
+    <!-- INTERACTIVE DEMO -->
+    <div class="sim-box">
+      <div class="sim-title">🔬 Interactive Demo – Spot the Fake Login</div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">This is a <strong style="color:var(--accent3)">safe simulation</strong> showing how a phishing login page looks. Enter anything and click Sign In to see what happens.</p>
+      
+      <div class="fake-login" id="fakeLogin">
+        <div class="fl-logo">
+          <span>🔒 SecureBank Login</span>
+        </div>
+        <input type="text" id="phishEmail" placeholder="Email address">
+        <input type="password" id="phishPass" placeholder="Password">
+        <button class="fl-btn" onclick="runPhishDemo()">Sign In</button>
+        <div class="fl-url" id="phishUrl">https://secure-bank-login.com</div>
+        <div class="fl-warn" id="phishWarn">⚠️ This is a phishing page! Your data was stolen.</div>
+      </div>
+
+      <div class="captured-data" id="capturedData">
+        <h5>🚨 DATA CAPTURED BY ATTACKER</h5>
+        <div class="data-line">username: <span id="captEmail">—</span></div>
+        <div class="data-line">password: <span id="captPass">—</span></div>
+        <div class="data-line">timestamp: <span id="captTime">—</span></div>
+        <div class="data-line">ip_address: <span>192.168.1.47 (simulated)</span></div>
+        <div style="margin-top:0.75rem;font-size:0.73rem;color:var(--muted)">⚠️ This data was NOT actually stored. For educational purposes only.</div>
+      </div>
+      <button class="sim-btn" onclick="resetPhish()" id="phishReset" style="display:none">↩ Reset Demo</button>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">🛡️ Prevention Tips</h3>
+    <div class="prevention-grid">
+      <div class="prevention-item">
+        <div class="pi-icon">🔍</div>
+        <div><h5>Check the URL</h5><p>Always verify the website address. Look for HTTPS and the correct domain spelling.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📧</div>
+        <div><h5>Scrutinize Emails</h5><p>Be suspicious of urgency. Legitimate companies rarely ask for passwords via email.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🔐</div>
+        <div><h5>Use 2FA</h5><p>Two-factor authentication prevents login even if your password is stolen.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🛡️</div>
+        <div><h5>Use a Password Manager</h5><p>Password managers won't auto-fill on fake domains, helping detect phishing sites.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MALWARE PAGE ══════════════════ -->
+<div id="page-malware" class="page">
+  <div class="section-header">
+    <div class="tag badge-danger">🦠 Attack Type</div>
+    <h2>Malware Infections</h2>
+    <p>Malware is malicious software designed to disrupt, damage, or gain unauthorized access to a computer system. Understanding how it spreads helps you avoid infection.</p>
+  </div>
+  <div class="content-area">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Types of Malware</h4>
+        <ul>
+          <li><strong style="color:var(--offwhite)">Virus</strong> – Attaches to files and self-replicates</li>
+          <li><strong style="color:var(--offwhite)">Trojan</strong> – Disguises as legitimate software</li>
+          <li><strong style="color:var(--offwhite)">Ransomware</strong> – Encrypts files, demands payment</li>
+          <li><strong style="color:var(--offwhite)">Spyware</strong> – Secretly monitors your activity</li>
+          <li><strong style="color:var(--offwhite)">Worm</strong> – Spreads across networks automatically</li>
+          <li><strong style="color:var(--offwhite)">Rootkit</strong> – Hides itself deep in the OS</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Common Entry Points</h4>
+        <ul>
+          <li>Email attachments from unknown senders</li>
+          <li>Infected USB drives or external devices</li>
+          <li>Downloading software from untrusted sites</li>
+          <li>Unpatched software vulnerabilities</li>
+          <li>Malicious ads (malvertising)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MALWARE STAGES SIMULATION -->
+    <div class="sim-box">
+      <div class="sim-title">⚙️ Infection Simulation – How Malware Spreads</div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">Watch how a malware infection progresses through a system step by step.</p>
+      
+      <div class="malware-stages" id="malwareStages">
+        <div class="stage" id="ms1">
+          <div class="stage-num">1</div>
+          <div><h5>Delivery</h5><p>User receives email with attachment "Invoice_2024.exe"</p></div>
+          <span class="stage-icon">📧</span>
+        </div>
+        <div class="stage" id="ms2">
+          <div class="stage-num">2</div>
+          <div><h5>Execution</h5><p>User opens attachment – malware code runs in background</p></div>
+          <span class="stage-icon">▶️</span>
+        </div>
+        <div class="stage" id="ms3">
+          <div class="stage-num">3</div>
+          <div><h5>Installation</h5><p>Malware installs itself, creates registry keys, hides processes</p></div>
+          <span class="stage-icon">💾</span>
+        </div>
+        <div class="stage" id="ms4">
+          <div class="stage-num">4</div>
+          <div><h5>Command & Control</h5><p>Malware contacts attacker's C&C server for instructions</p></div>
+          <span class="stage-icon">📡</span>
+        </div>
+        <div class="stage" id="ms5">
+          <div class="stage-num">5</div>
+          <div><h5>Actions on Objective</h5><p>Data exfiltration, encryption (ransomware), or lateral movement</p></div>
+          <span class="stage-icon">🔓</span>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem">
+        <div class="terminal" id="malwareLog">
+          <div class="t-line info">[SYSTEM] Simulation ready. Click "Start Infection Simulation" to begin.</div>
+        </div>
+        <button class="sim-btn" onclick="runMalwareSim()" id="malwareBtn">▶ Start Infection Simulation</button>
+      </div>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">🛡️ Prevention Techniques</h3>
+    <div class="prevention-grid">
+      <div class="prevention-item">
+        <div class="pi-icon">🛡️</div>
+        <div><h5>Antivirus Software</h5><p>Keep antivirus and anti-malware tools updated and run regular scans.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🔄</div>
+        <div><h5>Regular Updates</h5><p>Patch your OS and software immediately. Most malware exploits known vulnerabilities.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📦</div>
+        <div><h5>Trusted Sources Only</h5><p>Download software only from official websites and app stores.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">💾</div>
+        <div><h5>Regular Backups</h5><p>Maintain offline backups so ransomware can't permanently destroy your data.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ DDOS PAGE ══════════════════ -->
+<div id="page-ddos" class="page">
+  <div class="section-header">
+    <div class="tag badge-warn">💥 Attack Type</div>
+    <h2>DDoS Attacks</h2>
+    <p>A Distributed Denial of Service attack floods a server with massive traffic from thousands of compromised machines, making it unable to respond to legitimate users.</p>
+  </div>
+  <div class="content-area">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>How DDoS Works</h4>
+        <ul>
+          <li>Attacker builds a "botnet" of infected computers</li>
+          <li>Commands all bots to send requests simultaneously</li>
+          <li>Server gets overwhelmed and crashes or slows</li>
+          <li>Legitimate users can't access the service</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Types of DDoS</h4>
+        <ul>
+          <li><strong style="color:var(--offwhite)">Volumetric</strong> – Floods bandwidth with junk data</li>
+          <li><strong style="color:var(--offwhite)">Protocol</strong> – Exploits network protocol weaknesses</li>
+          <li><strong style="color:var(--offwhite)">Application Layer</strong> – Targets web server resources</li>
+          <li><strong style="color:var(--offwhite)">Amplification</strong> – Exploits DNS/NTP to multiply traffic</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DDOS SIMULATION -->
+    <div class="sim-box">
+      <div class="sim-title">🌊 Traffic Overload Simulation</div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">Watch how a server gets overwhelmed by a DDoS attack. This is a visual simulation only.</p>
+
+      <div class="ddos-visual" id="ddosVisual">
+        <div style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:0.5rem">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--muted);margin-bottom:0.25rem">BOTNET</div>
+          <div style="font-size:1.2rem">💻 Bot 1</div>
+          <div style="font-size:1.2rem">💻 Bot 2</div>
+          <div style="font-size:1.2rem">💻 Bot 3</div>
+          <div style="font-size:1.2rem" id="moreBots" style="display:none">+997 bots...</div>
+        </div>
+        <div class="server-box" id="serverBox">
+          <div style="font-size:1.8rem">🖥️</div>
+          <div style="font-size:0.72rem;margin-top:0.3rem">SERVER</div>
+          <div id="serverStatus" style="font-size:0.65rem;color:var(--accent3);margin-top:0.25rem">● ONLINE</div>
+        </div>
+      </div>
+
+      <div class="ddos-meter">
+        <div class="meter-label">
+          <span>Server Load</span>
+          <span id="loadPct">0%</span>
+        </div>
+        <div class="meter-bar"><div class="meter-fill" id="meterFill"></div></div>
+      </div>
+
+      <div class="packet-counter">
+        <div class="counter-box">
+          <div class="cval" id="reqCount">0</div>
+          <div class="clabel">Requests/sec</div>
+        </div>
+        <div class="counter-box danger">
+          <div class="cval" id="dropCount">0</div>
+          <div class="clabel">Dropped Packets</div>
+        </div>
+        <div class="counter-box">
+          <div class="cval" id="uptime">100%</div>
+          <div class="clabel">Uptime</div>
+        </div>
+      </div>
+
+      <button class="sim-btn" onclick="runDDoSSim()" id="ddosBtn">🌊 Launch DDoS Simulation</button>
+      <button class="sim-btn" onclick="resetDDoS()" id="ddosReset" style="display:none;background:var(--card-bg);border:1px solid var(--border)">↩ Reset</button>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">🛡️ Prevention Methods</h3>
+    <div class="prevention-grid">
+      <div class="prevention-item">
+        <div class="pi-icon">☁️</div>
+        <div><h5>CDN & Load Balancing</h5><p>Distribute traffic across multiple servers to absorb attack volumes.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🚧</div>
+        <div><h5>Rate Limiting</h5><p>Limit requests per IP to prevent any single source from overloading the server.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🤖</div>
+        <div><h5>Bot Detection</h5><p>Use WAF and CAPTCHA to identify and block automated attack traffic.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📊</div>
+        <div><h5>Traffic Monitoring</h5><p>Real-time anomaly detection can identify attack patterns early and trigger countermeasures.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MITM PAGE ══════════════════ -->
+<div id="page-mitm" class="page">
+  <div class="section-header">
+    <div class="tag" style="background:rgba(200,64,255,0.12);color:#d060ff;border:1px solid rgba(200,64,255,0.3)">👤 Attack Type</div>
+    <h2>Man-in-the-Middle</h2>
+    <p>In a MITM attack, the attacker secretly positions themselves between two communicating parties, intercepting and potentially altering the messages without either party knowing.</p>
+  </div>
+  <div class="content-area">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>How MITM Works</h4>
+        <ul>
+          <li>Attacker intercepts network traffic (e.g., on public WiFi)</li>
+          <li>Victim thinks they're communicating with the real server</li>
+          <li>All data passes through the attacker first</li>
+          <li>Attacker can read, modify, or inject data silently</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>MITM Techniques</h4>
+        <ul>
+          <li><strong style="color:var(--offwhite)">ARP Spoofing</strong> – Poisons local network routing</li>
+          <li><strong style="color:var(--offwhite)">SSL Stripping</strong> – Downgrades HTTPS to HTTP</li>
+          <li><strong style="color:var(--offwhite)">Evil Twin</strong> – Rogue WiFi hotspot</li>
+          <li><strong style="color:var(--offwhite)">DNS Spoofing</strong> – Redirects domain to wrong IP</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MITM SIMULATION -->
+    <div class="sim-box">
+      <div class="sim-title">🔍 MITM Interception Simulation</div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">See how an attacker intercepts communication between Alice and Bob.</p>
+
+      <div style="position:relative;padding-top:80px">
+        <div class="mitm-attacker" id="mitmAttacker">
+          <span class="mn-icon">😈</span>
+          <h5>ATTACKER</h5>
+          <div style="font-size:0.65rem;color:var(--muted);margin-top:0.25rem" id="attackerMsg">Intercepting...</div>
+        </div>
+        <div class="mitm-flow">
+          <div class="mitm-node" id="aliceNode">
+            <span class="mn-icon">👩</span>
+            <h5>Alice</h5>
+            <div style="font-size:0.65rem;color:var(--muted);margin-top:0.25rem">Sender</div>
+          </div>
+          <div style="flex:1;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));min-width:40px;position:relative">
+            <div id="mitmArrow1" style="position:absolute;right:-5px;top:50%;transform:translateY(-50%);border:5px solid transparent;border-left-color:var(--accent2)"></div>
+          </div>
+          <div class="mitm-node" id="bobNode">
+            <span class="mn-icon">👨</span>
+            <h5>Bob</h5>
+            <div style="font-size:0.65rem;color:var(--muted);margin-top:0.25rem">Receiver</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mitm-msg" id="mitmMsg1">📨 Alice sends: "Hi Bob, my password is ****"</div>
+      <div class="mitm-msg" id="mitmMsg2" style="margin-top:0.5rem">😈 Attacker reads: "Hi Bob, my password is hunter2" — then forwards modified message</div>
+      <div class="mitm-msg" id="mitmMsg3" style="margin-top:0.5rem">📨 Bob receives: "Hi Bob, my password is ****" — Bob doesn't know it was intercepted!</div>
+
+      <button class="sim-btn" onclick="runMITMSim()" id="mitmBtn">▶ Run Interception Simulation</button>
+      <button class="sim-btn" onclick="resetMITM()" id="mitmReset" style="display:none;background:var(--card-bg);border:1px solid var(--border)">↩ Reset</button>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">🛡️ Security Tips</h3>
+    <div class="prevention-grid">
+      <div class="prevention-item">
+        <div class="pi-icon">🔒</div>
+        <div><h5>Always Use HTTPS</h5><p>Look for the padlock icon. HTTPS encrypts traffic so interceptors can't read it.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📶</div>
+        <div><h5>Avoid Public WiFi</h5><p>Public networks are prime hunting grounds for MITM attackers. Use your mobile data instead.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🌐</div>
+        <div><h5>Use a VPN</h5><p>A trusted VPN encrypts all your traffic, preventing eavesdropping on untrusted networks.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🔑</div>
+        <div><h5>End-to-End Encryption</h5><p>Use apps like Signal that offer E2E encryption — even the service provider can't read your messages.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PASSWORD PAGE ══════════════════ -->
+<div id="page-password" class="page">
+  <div class="section-header">
+    <div class="tag badge-safe">🔑 Security Topic</div>
+    <h2>Password Security</h2>
+    <p>Passwords are your first line of defense. Learn how attackers crack weak passwords and how to create credentials that are virtually uncrackable.</p>
+  </div>
+  <div class="content-area">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>How Passwords Get Cracked</h4>
+        <ul>
+          <li><strong style="color:var(--offwhite)">Brute Force</strong> – Trying every combination</li>
+          <li><strong style="color:var(--offwhite)">Dictionary Attack</strong> – Common words and variations</li>
+          <li><strong style="color:var(--offwhite)">Credential Stuffing</strong> – Using leaked password lists</li>
+          <li><strong style="color:var(--offwhite)">Rainbow Tables</strong> – Precomputed hash lookups</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Time to Crack Estimates</h4>
+        <ul>
+          <li><span style="color:var(--danger)">password123</span> – Instantly cracked</li>
+          <li><span style="color:var(--warn)">P@ssw0rd!</span> – 2 minutes</li>
+          <li><span style="color:var(--warn)">Tr0ub4dor&3</span> – 3 days</li>
+          <li><span style="color:var(--accent3)">correct-horse-battery-staple</span> – 550 years</li>
+          <li><span style="color:var(--accent3)">X7#mK9$pL@qN2!</span> – 34 billion years</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PASSWORD STRENGTH METER -->
+    <div class="sim-box">
+      <div class="sim-title">🔬 Live Password Strength Analyzer</div>
+      <div class="pw-demo">
+        <div class="pw-input-wrap">
+          <input type="password" id="pwInput" placeholder="Type a password to analyze..." oninput="analyzePw(this.value)">
+          <button class="pw-toggle" onclick="togglePwVis()">👁️</button>
+        </div>
+        <div class="pw-strength"><div class="pw-strength-fill" id="pwFill"></div></div>
+        <div class="pw-label" id="pwLabel" style="color:var(--muted)">Type a password above</div>
+        <div class="pw-criteria">
+          <div class="pw-criterion" id="cr-len"><div class="dot"></div> At least 12 characters</div>
+          <div class="pw-criterion" id="cr-upper"><div class="dot"></div> Uppercase letter</div>
+          <div class="pw-criterion" id="cr-lower"><div class="dot"></div> Lowercase letter</div>
+          <div class="pw-criterion" id="cr-num"><div class="dot"></div> Number</div>
+          <div class="pw-criterion" id="cr-sym"><div class="dot"></div> Special character</div>
+          <div class="pw-criterion" id="cr-nodict"><div class="dot"></div> Not a common word</div>
+        </div>
+      </div>
+
+      <div class="pw-examples">
+        <div class="pw-example" style="border-color:rgba(255,64,96,0.3)">
+          <h5 style="color:var(--danger)">❌ Weak</h5>
+          <div class="pw-val">password123</div>
+          <div class="pw-time">Cracked: Instantly</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.4rem">Dictionary word + numbers = trivial to crack</div>
+        </div>
+        <div class="pw-example" style="border-color:rgba(255,176,32,0.3)">
+          <h5 style="color:var(--warn)">⚠️ Moderate</h5>
+          <div class="pw-val">P@ssw0rd!</div>
+          <div class="pw-time">Cracked: Minutes</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.4rem">Common substitutions are in every cracker's rules</div>
+        </div>
+        <div class="pw-example" style="border-color:rgba(0,240,160,0.3)">
+          <h5 style="color:var(--accent3)">✅ Strong</h5>
+          <div class="pw-val">Gk$7!pR#mXw2</div>
+          <div class="pw-time">Cracked: Centuries</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.4rem">Random, mixed characters with high entropy</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem">🛡️ Best Practices</h3>
+    <div class="prevention-grid">
+      <div class="prevention-item">
+        <div class="pi-icon">🗝️</div>
+        <div><h5>Use a Password Manager</h5><p>Tools like Bitwarden or 1Password generate and store unique, random passwords for every site.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📱</div>
+        <div><h5>Enable 2FA Everywhere</h5><p>Even if your password is stolen, 2FA means attackers still can't log in without your device.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">🔁</div>
+        <div><h5>Never Reuse Passwords</h5><p>One breach exposes all accounts that share the same password. Use unique credentials everywhere.</p></div>
+      </div>
+      <div class="prevention-item">
+        <div class="pi-icon">📋</div>
+        <div><h5>Passphrases Work Too</h5><p>4+ random words ("correct-horse-battery-staple") are long, memorable, and hard to crack.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ LIVE DEMO PAGE ══════════════════ -->
+<div id="page-demo" class="page">
+  <div class="section-header">
+    <div class="tag" style="background:rgba(0,200,255,0.12);color:var(--accent2);border:1px solid rgba(0,200,255,0.3)">⚡ Interactive</div>
+    <h2>Live Demo Center</h2>
+    <p>All simulations are 100% safe and educational. No real attacks are performed or enabled.</p>
+  </div>
+  <div class="content-area">
+    <div class="demo-tabs">
+      <button class="demo-tab active" onclick="switchDemo('network')">🌐 Network Traffic</button>
+      <button class="demo-tab" onclick="switchDemo('encrypt')">🔐 Encryption Demo</button>
+      <button class="demo-tab" onclick="switchDemo('scan')">🔎 Port Scan Sim</button>
+    </div>
+
+    <!-- Network Traffic -->
+    <div class="demo-panel active" id="demo-network">
+      <div class="sim-box">
+        <div class="sim-title">🌐 Network Packet Flow Visualization</div>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">Visualize how data packets travel from your browser to a server and back.</p>
+        <div style="display:flex;flex-direction:column;gap:1rem" id="packetLog">
+          <div class="flow-diagram" style="margin:0">
+            <div class="flow-node safe"><span class="fn-icon">🖥️</span>Your PC</div>
+            <div class="flow-arrow animated"></div>
+            <div class="flow-node"><span class="fn-icon">🔀</span>Router</div>
+            <div class="flow-arrow animated"></div>
+            <div class="flow-node"><span class="fn-icon">🌐</span>ISP</div>
+            <div class="flow-arrow animated"></div>
+            <div class="flow-node safe"><span class="fn-icon">🖥️</span>Server</div>
+          </div>
+        </div>
+        <div class="terminal" id="netLog" style="margin-top:1.5rem">
+          <div class="t-line info">[NETWORK] Ready to simulate packet flow...</div>
+        </div>
+        <button class="sim-btn" onclick="runNetworkSim()">▶ Simulate HTTP Request</button>
+        <button class="sim-btn" onclick="runNetworkSim(true)" style="background:rgba(255,64,96,0.2);border:1px solid var(--danger);margin-left:0.5rem">⚠️ Simulate with Attacker</button>
+      </div>
+    </div>
+
+    <!-- Encryption Demo -->
+    <div class="demo-panel" id="demo-encrypt">
+      <div class="sim-box">
+        <div class="sim-title">🔐 Encryption / Decryption Demo</div>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">See how encryption protects your data in transit. This uses a simple Caesar cipher for illustration.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div>
+            <div style="font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em">Plain Text</div>
+            <textarea id="encPlain" style="width:100%;background:var(--deep-blue);border:1px solid var(--border);border-radius:10px;padding:1rem;color:var(--offwhite);font-family:var(--font-mono);font-size:0.83rem;resize:vertical;min-height:100px;outline:none" placeholder="Type a message to encrypt...">Hello, send my bank details to Bob!</textarea>
+          </div>
+          <div>
+            <div style="font-size:0.78rem;font-weight:700;color:var(--accent3);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em">Encrypted (Intercepted)</div>
+            <div id="encResult" style="background:var(--deep-blue);border:1px solid rgba(0,240,160,0.3);border-radius:10px;padding:1rem;font-family:var(--font-mono);font-size:0.83rem;min-height:100px;color:var(--accent3);word-break:break-all">Click encrypt to see cipher text</div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
+          <label style="font-size:0.8rem;color:var(--muted)">Shift Key: </label>
+          <input type="range" id="shiftKey" min="1" max="25" value="13" oninput="document.getElementById('shiftVal').textContent=this.value" style="flex:1;max-width:200px">
+          <span id="shiftVal" style="font-family:var(--font-mono);color:var(--accent2)">13</span>
+        </div>
+        <button class="sim-btn" onclick="runEncrypt()">🔐 Encrypt Message</button>
+        <button class="sim-btn" onclick="runDecrypt()" style="background:rgba(0,240,160,0.15);border:1px solid var(--accent3);margin-left:0.5rem">🔓 Decrypt</button>
+        <div style="margin-top:1rem;font-size:0.78rem;color:var(--muted);line-height:1.6">💡 <strong style="color:var(--offwhite)">Real encryption</strong> (AES-256, RSA) is vastly more complex than this demo, making brute-force cracking computationally infeasible.</div>
+      </div>
+    </div>
+
+    <!-- Port Scan Sim -->
+    <div class="demo-panel" id="demo-scan">
+      <div class="sim-box">
+        <div class="sim-title">🔎 Port Scan Simulation</div>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem">Attackers often scan for open ports to find entry points. This shows what a scan might reveal.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:0.5rem;margin-bottom:1.5rem" id="portGrid">
+        </div>
+        <button class="sim-btn" onclick="runPortScan()" id="scanBtn">🔎 Run Port Scan</button>
+        <div style="margin-top:1rem;font-size:0.78rem;color:var(--muted)">💡 Open ports with unused services are attack vectors. Always close ports you don't need with a firewall.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ QUIZ PAGE ══════════════════ -->
+<div id="page-quiz" class="page">
+  <div class="section-header">
+    <div class="tag" style="background:rgba(0,240,160,0.12);color:var(--accent3);border:1px solid rgba(0,240,160,0.3)">🧠 Knowledge Test</div>
+    <h2>Cybersecurity Quiz</h2>
+    <p>Test your knowledge with 8 questions covering everything you've learned. Can you get a perfect score?</p>
+  </div>
+  <div class="content-area">
+    <div class="quiz-box">
+      <div class="quiz-progress" id="quizProgress"></div>
+      <div id="quizContent">
+        <div class="quiz-q" id="quizQ"></div>
+        <div class="quiz-options" id="quizOpts"></div>
+        <div class="quiz-feedback" id="quizFeedback"></div>
+        <button class="quiz-next" id="quizNext" onclick="nextQuestion()">Next Question →</button>
+      </div>
+      <div class="quiz-score" id="quizScore">
+        <div class="score-num" id="scoreNum">0/8</div>
+        <p>Quiz Complete!</p>
+        <p id="scoreMsg" style="margin-top:0.5rem;font-size:0.85rem"></p>
+        <button class="quiz-restart" onclick="startQuiz()">↩ Try Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div style="text-align:center;margin-bottom:2rem">
+      <div style="font-size:1.1rem;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem">🔒 Daily Cybersecurity Tips</div>
+      <div style="font-size:0.82rem;color:var(--muted)">Protect yourself with these essential security habits</div>
+    </div>
+    <div class="footer-tips">
+      <div class="footer-tip">
+        <h5>🔄 Update Regularly</h5>
+        <p>Enable automatic updates for your OS and apps. Most attacks exploit known vulnerabilities in outdated software.</p>
+      </div>
+      <div class="footer-tip">
+        <h5>📧 Think Before Clicking</h5>
+        <p>Hover over links before clicking. If an email creates urgency or asks for credentials, it's likely phishing.</p>
+      </div>
+      <div class="footer-tip">
+        <h5>📶 Secure Your WiFi</h5>
+        <p>Use WPA3 encryption on home networks. Never use default router passwords. Disable WPS.</p>
+      </div>
+      <div class="footer-tip">
+        <h5>🔑 Unique Passwords</h5>
+        <p>Use a different strong password for every account. A password manager makes this easy and secure.</p>
+      </div>
+      <div class="footer-tip">
+        <h5>💾 Backup Your Data</h5>
+        <p>Follow the 3-2-1 rule: 3 copies, 2 media types, 1 offsite. Ransomware cannot destroy what it cannot reach.</p>
+      </div>
+      <div class="footer-tip">
+        <h5>👁️ Monitor Accounts</h5>
+        <p>Enable login notifications. Check haveibeenpwned.com to see if your email appears in data breaches.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <strong>CyberShield EDU</strong> — For educational purposes only. All simulations are safe and do not perform real attacks.<br>
+      <span style="margin-top:0.3rem;display:inline-block">Built to raise cybersecurity awareness 🛡️</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── NAVIGATION ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const btn = document.getElementById('nav-' + id);
+  if (btn) btn.classList.add('active');
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ── PHISHING DEMO ──
+function runPhishDemo() {
+  const email = document.getElementById('phishEmail').value || 'user@example.com';
+  const pass = document.getElementById('phishPass').value || 'mypassword';
+  const fakeLogin = document.getElementById('fakeLogin');
+  fakeLogin.classList.add('exposed');
+  document.getElementById('phishWarn').style.display = 'block';
+  document.getElementById('phishUrl').style.color = '#ff4060';
+  document.getElementById('captEmail').textContent = email;
+  document.getElementById('captPass').textContent = '*'.repeat(pass.length) + ' [captured]';
+  document.getElementById('captTime').textContent = new Date().toISOString();
+  const cap = document.getElementById('capturedData');
+  cap.style.display = 'block';
+  document.getElementById('phishReset').style.display = 'inline-block';
+}
+
+function resetPhish() {
+  document.getElementById('fakeLogin').classList.remove('exposed');
+  document.getElementById('phishWarn').style.display = 'none';
+  document.getElementById('phishUrl').style.color = '#888';
+  document.getElementById('capturedData').style.display = 'none';
+  document.getElementById('phishReset').style.display = 'none';
+  document.getElementById('phishEmail').value = '';
+  document.getElementById('phishPass').value = '';
+}
+
+// ── MALWARE SIM ──
+let malwareRunning = false;
+function runMalwareSim() {
+  if (malwareRunning) return;
+  malwareRunning = true;
+  document.getElementById('malwareBtn').disabled = true;
+  const log = document.getElementById('malwareLog');
+  const stages = [
+    { id: 'ms1', delay: 500, logs: [
+      { t: 'info', msg: '[EMAIL] Incoming: "Invoice_2024.exe" from unknown@suspicious.net' },
+      { t: 'warn', msg: '[USER] File opened by user... executing.' },
+    ]},
+    { id: 'ms2', delay: 2500, logs: [
+      { t: 'err', msg: '[EXEC] Malware process started: svchost32.exe (hidden)' },
+      { t: 'warn', msg: '[PROC] Injecting into explorer.exe...' },
+    ]},
+    { id: 'ms3', delay: 4500, logs: [
+      { t: 'err', msg: '[REG] HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run → persistence set' },
+      { t: 'err', msg: '[FILE] Copying to C:\\Windows\\System32\\malware.dll' },
+    ]},
+    { id: 'ms4', delay: 6500, logs: [
+      { t: 'warn', msg: '[NET] Connecting to C2: 195.161.x.x:4444' },
+      { t: 'info', msg: '[C2] Awaiting commands from attacker...' },
+    ]},
+    { id: 'ms5', delay: 8500, logs: [
+      { t: 'err', msg: '[EXFIL] Sending /Documents/ to attacker FTP server' },
+      { t: 'err', msg: '[RANSOM] Encrypting files... README_RANSOM.txt created' },
+      { t: 'info', msg: '[SIM] Simulation complete. In real life: call incident response.' },
+    ]},
+  ];
+
+  log.innerHTML = '<div class="t-line info">[SIM] Starting malware infection simulation...</div>';
+
+  stages.forEach(stage => {
+    setTimeout(() => {
+      document.getElementById(stage.id).classList.add('active');
+      stage.logs.forEach((l, i) => {
+        setTimeout(() => {
+          const line = document.createElement('div');
+          line.className = `t-line ${l.t}`;
+          line.innerHTML = `<span class="prompt">&gt; </span>${l.msg}`;
+          log.appendChild(line);
+          log.scrollTop = log.scrollHeight;
+        }, i * 500);
+      });
+    }, stage.delay);
+  });
+
+  setTimeout(() => {
+    malwareRunning = false;
+    document.getElementById('malwareBtn').disabled = false;
+    document.getElementById('malwareBtn').textContent = '↩ Restart Simulation';
+    document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+  }, 11000);
+}
+
+// ── DDOS SIM ──
+let ddosInterval = null;
+let ddosLoad = 0;
+let ddosReqs = 0;
+let ddosDrops = 0;
+
+function runDDoSSim() {
+  document.getElementById('ddosBtn').disabled = true;
+  document.getElementById('ddosReset').style.display = 'inline-block';
+  document.getElementById('moreBots').style.display = 'block';
+  
+  ddosInterval = setInterval(() => {
+    ddosLoad = Math.min(ddosLoad + Math.random() * 8 + 3, 100);
+    ddosReqs += Math.floor(Math.random() * 5000 + 8000);
+    
+    document.getElementById('meterFill').style.width = ddosLoad + '%';
+    document.getElementById('loadPct').textContent = Math.round(ddosLoad) + '%';
+    document.getElementById('reqCount').textContent = (ddosReqs / 1000).toFixed(1) + 'K';
+    
+    if (ddosLoad > 60) {
+      ddosDrops += Math.floor((ddosLoad - 60) * 200);
+      document.getElementById('dropCount').textContent = (ddosDrops / 1000).toFixed(1) + 'K';
+    }
+    
+    const uptime = Math.max(0, Math.round(100 - (ddosLoad - 20) * 1.2));
+    document.getElementById('uptime').textContent = uptime + '%';
+    
+    if (ddosLoad > 70) {
+      const server = document.getElementById('serverBox');
+      server.classList.add('overloaded');
+      document.getElementById('serverStatus').textContent = '● DEGRADED';
+      document.getElementById('serverStatus').style.color = 'var(--warn)';
+    }
